@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
-# Create your views here.
 
 # Creating the Landing Page
 class LandingPage(TemplateView):
