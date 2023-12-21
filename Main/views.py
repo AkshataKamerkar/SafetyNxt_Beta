@@ -16,22 +16,24 @@ from django.views.generic import TemplateView, FormView
 '''
 
 # Creating the Landing Page
-# LandingPage is a TemplateView since we just hv to render a simple template and dont have to perform form based or data retrival frm the models operations
+# LandinPage is a FormView since we have to add a Contact Us form in it
 class LandingPage(FormView):
 
 
     template_name = 'landingPage.html'
 
+# AboutUs is a TemplateView since we just hv to render a simple template and dont have to perform form based or data retrival frm the models operations
 # Creating the About Us Page
 class AboutUs(TemplateView):
 
     template_name = 'about.html'
 
+# FormView coz here we have to take new users info and register it in our db as well as retrive and confirm the info of existing user
 class LogInSignUp(FormView):
 
     template_name = 'log.html'
 
-
+# After successful login user will be redirected to this page, we will get users location info from this page
 class GetLLs(FormView):
 
     template_name = 'getInfo.html'
