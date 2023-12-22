@@ -1,10 +1,11 @@
 from django.urls import path
-from .views import LandingPage, AboutUs, GetLLs
+from .views import LandingPage, AboutUs, GetLLs, LogInSignUp
 
 app_name = 'main'
 
 urlpatterns = [
     path('',LandingPage.as_view(),name='index'),
-    path('/about',AboutUs.as_view(),name='about'),
-    path('/info',GetLLs.as_view(),name='info'),
+    path('about',AboutUs.as_view(),name='about'),
+    path('info',GetLLs.as_view(),name='info'),
+    path('log',LogInSignUp.as_view(),name='log'),
 ]

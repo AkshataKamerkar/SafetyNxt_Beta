@@ -17,8 +17,8 @@ from django.views.generic import TemplateView, FormView
 
 # Creating the Landing Page
 # LandinPage is a FormView since we have to add a Contact Us form in it
-class LandingPage(FormView):
-
+class LandingPage(TemplateView):         # Jb tk form define nhi krte tb tk
+                                         # FormView mt do, if diya toh django usse load hi nhi krta
 
     template_name = 'landingPage.html'
 
