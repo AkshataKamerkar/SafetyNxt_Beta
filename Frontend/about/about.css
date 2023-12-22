@@ -1,0 +1,166 @@
+.about {
+  padding: 50px 20px;
+}
+@media (min-width: 900px) {
+  .about {
+    padding: 100px 20px;
+  }
+}
+
+.about img {
+  width: 60%;
+}
+@media (min-width: 900px) {
+  .about img {
+    width: 100%;
+  }
+}
+.about h2 {
+  text-align: center;
+}
+.about p {
+  line-height: 1.7;
+}
+.about .flex-row {
+  gap: 50px;
+  flex-direction: column;
+}
+@media (min-width: 900px) {
+  .about .flex-row {
+    flex-direction: row;
+  }
+}
+.about .left,
+.about .right {
+  flex: 1;
+}
+.about .left .flex-row {
+  gap: 0;
+  flex-direction: column;
+  margin-top: 32px;
+  align-items: center;
+}
+@media (min-width: 500px) {
+  .about .left .flex-row {
+    flex-direction: row;
+  }
+}
+.about .left .info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+@media (min-width: 500px) {
+  .about .left .info {
+    margin-top: 0;
+    align-items: initial;
+  }
+}
+.about .left .info p {
+  color: #444;
+  font-size: 14px;
+}
+.about .left i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  border: 2px solid #007bff;
+  border-radius: 50%;
+  transition: 500ms ease all;
+  color: #007bff;
+  font-size: 24px;
+}
+@media (min-width: 500px) {
+  .about .left i {
+    margin-right: 16px;
+  }
+}
+.about .left i:hover {
+  background-color: #007bff;
+  border-color: transparent;
+  color: #fff;
+}
+
+.about-1 .left {
+  text-align: center;
+}
+@media (min-width: 500px) {
+  .about-1 .left {
+    text-align: initial;
+  }
+}
+
+.about-1 .right,
+.about-3 .right {
+  display: flex;
+  justify-content: center;
+}
+@media (min-width: 900px) {
+  .about-1 .right,
+  .about-3 .right {
+    align-items: start;
+  }
+}
+
+.about-2 .left {
+  order: 2;
+  display: flex;
+  justify-content: center;
+}
+@media (min-width: 900px) {
+  .about-2 .left {
+    order: 1;
+    align-items: start;
+  }
+}
+.about-2 .right {
+  order: 1;
+}
+@media (min-width: 900px) {
+  .about-2 .right {
+    order: 2;
+  }
+}
+
+.about-2 p,
+.about-3 p {
+  margin-bottom: 20px;
+}
+
+/* Utility classes */
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.flex-row {
+  display: flex;
+}
+
+.btn {
+  cursor: pointer;
+  display: inline-block;
+  padding: 14px 40px;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 45px;
+  border: 2px solid transparent;
+  font-weight: 600;
+  transition: 500ms ease all;
+}
+.btn:hover {
+  background-color: transparent;
+  border-color: #fff;
+}
+
+.btn-light {
+  background-color: transparent;
+  border-color: #fff;
+}
+.btn-light:hover {
+  background-color: #007bff;
+  border-color: transparent;
+}/*# sourceMappingURL=style.css.map */
