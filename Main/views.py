@@ -29,7 +29,7 @@ class AboutUs(TemplateView):
     template_name = 'about.html'
 
 # FormView coz here we have to take new users info and register it in our db as well as retrive and confirm the info of existing user
-class LogInSignUp(FormView):
+class LogInSignUp(TemplateView):
 
     template_name = 'log.html'
 

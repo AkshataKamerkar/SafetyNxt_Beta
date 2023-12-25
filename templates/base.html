@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/style.css">
     <!-- Box Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-    {% block links %} {% endblock %}
+
+    {% block links %}
+        <link rel="stylesheet" href="/static/css/style.css">
+    {% endblock %}
     <title>{% block title %} SafetyNxt {% endblock %}</title>
 </head>
 <body>
@@ -94,10 +96,6 @@
     </div>
 </body>
 
-<!-- Swiper JS -->
-<script src="/static/js/swiper-bundle.min.js"></script>
-
-<!-- JavaScript -->
 <script src="/static/js/script.js"></script>
-
+{% block js %} {% endblock %}
 </html>
