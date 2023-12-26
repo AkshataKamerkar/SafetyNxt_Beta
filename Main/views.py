@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, FormView
-
+from django.views.generic.edit import FormView
+from .forms import ContactForm
+from .models import Contact
 '''
     Total 5 Routes 
         - LandingPage      : Nav, MainVideo/ MainModel, Services, Features, Contact Form, Testimonials, Footer 
@@ -17,10 +19,36 @@ from django.views.generic import TemplateView, FormView
 
 # Creating the Landing Page
 # LandinPage is a FormView since we have to add a Contact Us form in it
-class LandingPage(TemplateView):         # Jb tk form define nhi krte tb tk
-                                         # FormView mt do, if diya toh django usse load hi nhi krta
+# class LandingPage(FormView):         # Jb tk form define nhi krte tb tk
+#                                          # FormView mt do, if diya toh django usse load hi nhi krta
+#
+#     template_name = 'landingPage.html'
+#     form_class = contactForm
+#     success_url = '/'
+#
+#     def form_valid(self, form):
+#         new_object = contact.objects.create(
+#             fname = form.cleaned_data['fname'],
+#             lname = form.cleaned_data['lname'],
+#             email = form.cleaned_data['email'],
+#             mob = form.cleaned_data['mob'],
+#             msg = form.cleaned_data['msg']
+#
+#         )
+#
+#         return super().form_valid(form)
 
+
+class LandingPage(FormView):
     template_name = 'landingPage.html'
+    form_class = ContactForm
+    success_url = '/'  # Redirect URL after successful form submission
+
+    def form_valid(self, form):
+        form.save()  # This saves the form data to the database using the model
+        return super().form_valid(form)
+
+
 
 # AboutUs is a TemplateView since we just hv to render a simple template and dont have to perform form based or data retrival frm the models operations
 # Creating the About Us Page
