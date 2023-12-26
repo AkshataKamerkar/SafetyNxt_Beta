@@ -37,8 +37,14 @@
                 <li><a href="{% url 'main:about' %}">About</a></li>
             </ul>
 
+            {% if user.is_authenticated %}
             <!-- Log In Btn -->
-            <a href="{% url 'main:log' %}" class="btn">LogIn</a>
+            <a href="{% url 'account_logout' %}" class="btn">Logout</a>
+
+            {% else %}
+            <a href="{% url 'account_login' %}" class="btn">LogIn</a>
+
+            {% endif %}
 
         </div>
     </header>

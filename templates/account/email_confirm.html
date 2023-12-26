@@ -1,0 +1,36 @@
+{% extends "account/base_entrance.html" %}
+{% load i18n %}
+
+{% block head_title %}
+    {% trans "Confirm Email Address" %}
+{% endblock head_title %}
+
+{% block content %}
+    <h1>{% trans "Confirm Email Address" %}</h1>
+    {% if confirmation %}
+        {% if confirmation.email_address.verified %}
+            <p>
+                {% blocktrans %}
+                    The email {{ confirmation.email_address.email }} is already confirmed.
+                {% endblocktrans %}
+            </p>
+        {% else %}
+            <p>
+                {% blocktrans with confirmation.email_address.email as email %}
+                    Please confirm that <a href="mailto:{{ email }}">{{ email }}</a> is an email address for user {{ confirmation.email_address.user }}.
+                {% endblocktrans %}
+            </p>
+            <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+                {% csrf_token %}
+                <button type="submit">{% trans 'Confirm' %}</button>
+            </form>
+        {% endif %}
+    {% else %}
+        {% url 'account_email' as email_url %}
+        <p>
+            {% blocktrans %}
+                This email confirmation link is invalid. Please <a href="{{ email_url }}">request a new email confirmation</a>.
+            {% endblocktrans %}
+        </p>
+    {% endif %}
+{% endblock content %}
