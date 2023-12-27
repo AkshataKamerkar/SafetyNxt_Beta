@@ -182,7 +182,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'datasciencetestmail@gmail.com'
-EMAIL_HOST_PASSWORD = 'neoe lwek qslw ylcj'
+EMAIL_HOST_PASSWORD = os.path('pass')
 EMAIL_USE_TLS = True
 
 
