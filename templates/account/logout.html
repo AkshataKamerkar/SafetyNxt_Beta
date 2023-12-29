@@ -1,21 +1,44 @@
-{% extends "base.html" %}
-{% load i18n %}
-{% block head_title %}
-    {% trans "Sign Out" %}
-{% endblock head_title %}
-{% block content %}
-    <div style="width: 60%; margin: 20px auto; padding: 20px; background-color: #fff; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-        <h1 style="font-size: 24px; margin-bottom: 20px; color: #333;">{% trans "Sign Out" %}</h1>
-        <p style="color: #555; margin-bottom: 15px;">{% trans 'Are you sure you want to sign out?' %}</p>
-        <form style="display: inline-block;" method="post" action="{% url 'account_logout' %}">
-            {% csrf_token %}
-            {% if redirect_field_value %}
-                <input type="hidden"
-                       name="{{ redirect_field_name }}"
-                       value="{{ redirect_field_value }}" />
-            {% endif %}
-            <input type="submit" style="padding: 10px 20px; background-color: #3498db; color: #fff; border: none; border-radius: 3px; cursor: pointer;"
-                   value="{% trans 'Sign Out' %}">
-        </form>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Out</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(to bottom, #3498db, #2980b9); /* Blue gradient background */
+        }
+
+        /* Adjust the box style */
+        div[style*="width: 60%"] {
+            width: 50% !important; /* Decreased width */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add box shadow */
+            background: linear-gradient(to bottom, #fff, #fff); /* White gradient to maintain the white box */
+            border-radius: 5px; /* Preserve border-radius */
+            padding: 20px; /* Maintain padding */
+            text-align: center; /* Preserve text alignment */
+        }
+
+        input:hover {
+            background-color: #030d1f;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 60%; margin: 20px auto;">
+        <div style="background-color: #fff;"> <!-- Ensures inner box color remains white -->
+            <h1 style="font-size: 24px; margin-bottom: 20px; color: #333;">Sign Out</h1>
+            <p style="color: #555; margin-bottom: 15px;">Are you sure you want to sign out?</p>
+            <form style="display: inline-block;" method="post" action="/accounts/logout/">
+                <input type="hidden" name="csrfmiddlewaretoken" value="ijSYiit9iBLcT7CMXzOmb0ZTEDgvPFC9Md3sEww0noe4PUatBqSFwIV0A6q1CEKS">
+                {% csrf_token %}
+                <input type="submit" style="padding: 10px 20px; background-color: #3498db; color: #fff; border: none; border-radius: 3px; cursor: pointer;" value="Sign Out">
+            </form>
+        </div>
     </div>
-{% endblock content %}
+</body>
+</html>
