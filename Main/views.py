@@ -62,6 +62,6 @@ class LogInSignUp(TemplateView):
     template_name = 'log.html'
 
 # After successful login user will be redirected to this page, we will get users location info from this page
-class GetLLs(FormView):
+class GetLLs(TemplateView):
 
-    template_name = 'getInfo.html'
+    template_name = 'map.html'

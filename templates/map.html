@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/static/css/map.css" />
+    <title>live-map</title>
+
+    <!-- Include Leaflet and other libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+  </head>
+
+  <body>
+    <div id="directions-box">
+      <div id="directions-title">Driving Directions</div>
+
+      <div class="container">
+        <!-- Input fields for starting point and destination -->
+        <div class="input-box">
+          <img class="icon-left" src="/img/start location.png" />
+          <div class="bg-bar"></div>
+          <img class="icon-right" src="/img/search.png" />
+          <input
+            type="text"
+            id="start"
+            class="text-box"
+            placeholder="Choose starting point"
+          />
+        </div>
+
+        <div class="destination-box">
+          <img class="icon-left" src="/img/destination.png" />
+          <div class="bg-bar"></div>
+          <img class="icon-right" src="/img/search.png" />
+          <input
+            type="text"
+            id="destination"
+            class="text-box"
+            placeholder="Choose destination"
+          />
+        </div>
+
+        <!-- Rotate Icon -->
+        <img class="rotate-icon" src="/img/dot.png" />
+
+        <!-- Additional Icon -->
+        <img class="additional-icon" src="/img/switch.png" />
+
+        <!-- Find Route Box -->
+        <div class="find-route-box">
+          <div class="background-bar"></div>
+          <!-- Button to trigger findRoute function -->
+          <button class="find-route-text" onclick="findRoute()">
+            Start Monitoring
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <img
+      id="success-image"
+      src="/img/menu-bar.png"
+      alt="Success"
+      onclick="toggleMenu()"
+    />
+
+    <div id="menu-container">
+      <div class="frame"></div>
+      <div class="header">
+        <div class="title">Select Service</div>
+        <img class="icon" src="/img/service.png" />
+      </div>
+      <div class="service-block">
+        <div class="service-title">Traffic Monitoring</div>
+        <img class="icon" src="/static/img/traffic1.png" />
+        <!-- toggle button -->
+        <label class="toggle_box">
+          <input type="checkbox" id="Checkbox" />
+          <div class="circle"></div>
+        </label>
+      </div>
+      <div class="service-block">
+        <div class="service-title">Accident Detection</div>
+        <img class="icon" src="/static/img/accident1.png" />
+        <label class="toggle_box">
+          <input type="checkbox" id="checkbox" />
+          <div class="circle"></div>
+        </label>
+      </div>
+      <div class="service-block">
+        <div class="service-title">Pothole Identification</div>
+        <img class="icon" src="/static/img/pothole.png" />
+        <label class="toggle_box">
+          <input type="checkbox" id="Checkbox" />
+          <div class="circle"></div>
+        </label>        
+      </div>
+    </div>
+
+    <div class="folium-map" id="map_aa291a4f1eafe5bbd01101418f32837c"></div>
+
+    <script src="/static/js/map.js"></script>
+  </body>
+</html>

@@ -11,7 +11,12 @@
         <!-- <h1 class="section-title">Welcome to Our Website</h1> -->
         <div class="home-text">
             <h1>Find Your Next<br> Perfect Place To<br> Live</h1>
-            <a href="" class="btn">Get Started ></a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'main:info' %}" class="btn">Start Monitoring ></a>
+            {% else %}
+                <a href="{% url 'account_login' %}" class="btn">Get Started ></a>
+            {% endif %}
         </div>
     </section>
 
