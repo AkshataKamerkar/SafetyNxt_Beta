@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Crimson+Pro:wght@300&family=Marck+Script&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Crimson Pro', serif;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden; /* Prevent video overflow */
+            background-color: #001f3f;
+        }
+
+        video {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: -1; /* Place the video behind other elements */
+        }
+
+        .signup {
+            background-color:  white;
+            position: relative;
+            top: 0px;
+            left: 30px;
+            height: 730px;
+            width: 430px;
+            padding: 60px;
+            margin: -50px;
+            box-shadow: 10px 10px 25px black;
+            border-radius: 85px 20px 85px 20px;
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            box-sizing: border-box;
+            opacity: 0.9;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        p {
+            position: relative;
+            left: 140px;
+            font-size: 35px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont;
+            text-decoration:wavy;
+        }
+
+        .p1
+         {
+            position: relative;
+            left: 10px;
+            text-align: center;
+            padding: 5px;
+            color: #071664;
+            font-size: 35px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        .p2{
+            font-size: 25px;
+            position: relative;
+            left: 120px;
+            top: -10px;
+            font-family:system-ui, -apple-system, BlinkMacSystemFont;
+        }
+
+        .p3{
+            font-size: 25px;
+            position: relative;
+            left: 50px;
+            top: -10px;
+            font-family:system-ui, -apple-system, BlinkMacSystemFont;
+        }
+
+        a{
+            color:  darkblue;
+        }
+
+        a:hover{
+            color: #071664;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            color: #ccc;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont;
+        }
+
+        label,
+        input {
+            position: relative;
+            left: 16px;
+            display: block;
+            width: 80%;
+            margin-bottom: 10px;
+            color: black;
+        }
+
+        input {
+            position: relative;
+            left: 12px;
+            height: 45px;
+            width: 94%;
+            padding: 10px;
+            border-radius: 15px;
+            border: 1px solid black;
+            background-color: transparent;
+            background-color: white;
+            box-sizing: border-box;
+            color: black;
+        }
+
+        button {
+            font-size: 15px;
+            width: 100%;
+            padding: 15px;
+            color: #fffefe;
+            background-color: #0b1a66;
+            border: none;
+            border-radius: 10px;
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #071664;
+            transform: scale(1.1);
+        }
+
+        .a2 {
+            position: relative;
+            top: -16px;
+            left: 70px;
+            color: darkblue;
+            text-decoration: none;
+            cursor: pointer;
+            display: block;
+            margin-top: 15px;
+        }
+
+        a2:hover{
+            color: #071664;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            opacity: 0.62;
+        }
+    </style>
+</head>
+
+<body>
+    <video autoplay muted loop>
+        <source src="images\video4.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="signup" id="signupForm">
+        <p class="p1"><b>SIGN UP</b></p>
+        <form action="verification.html" method="post">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required placeholder="enter your name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email address:</label>
+                <input type="email" id="email" name="email" required placeholder="enter your email address">
+            </div>
+            <div class="form-group">
+                <label for="uname">Username:</label>
+                <input type="text" id="uname" name="uname" required placeholder="enter your username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required placeholder="enter your password">
+            </div>
+            <button type="submit">SIGN UP</button>
+        </form>
+        <p class="p3">Already have an account? <a href="login2.html" class="a2">Log in here</a></p>
+    </div>
+
+</body>
+
+</html>

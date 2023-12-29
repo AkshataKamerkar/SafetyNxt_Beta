@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden; /* Prevent video overflow */
+        }
+
+        h2 {
+            position: relative;
+            top: 20px;
+            padding: 15px;
+
+            color: #071664;
+        }
+
+        .verification-form {
+    position: relative;
+    left: -140px;
+    height: 500px;
+    width: 500px;
+    background-color: whitesmoke; /* Glassmorphism background color with transparency */
+    backdrop-filter: blur(70px);
+    padding: 20px;
+    border-radius: 25px;
+    box-shadow: 10px 10px 50px black;
+    text-align: center;
+    transition: background 0.9s ease-in-out; /* Smooth transition for glass effect */
+}
+
+img {
+    object-fit: cover;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    opacity: 0.6;
+}
+
+        /*video styles
+        video {
+            position: fixed;
+
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -8; /* Place the video behind other elements
+            opacity: 0.9;
+            filter: brightness(0.6);
+        }*/
+
+        label {
+            position: relative;
+            top: -15px;
+            color: black;
+            left: -195px;
+        }
+
+        input {
+            position: relative;
+            left: 3px;
+            top: -5px;
+            color: black;
+            width: 460px;
+            padding: 10px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid;
+            border-radius: 20px;
+        }
+
+        button {
+            position: relative;
+            top: 0px;
+            font-size: 17px;
+            background-color: #0b1a66;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 60px;
+            transition: background-color 0.3s ease-in-out, transform 0.4s ease-in-out;
+            cursor: pointer;
+            width: 160px;
+        }
+
+        button:hover {
+            background-color: #071664;
+            transform: scale(1.2);
+        }
+
+        p {
+            text-align: justify;
+            padding: 0px;
+            margin: 30px;
+            color: black;
+        }
+
+        .p1 {
+            position: relative;
+            top: -9px;
+            font-size: 25px;
+            left: 80px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont;
+        }
+
+        a {
+            font-size: 20px;
+            position: relative;
+            top: -10px;
+            left: 57px;
+            color: #071664;
+            text-decoration: none;
+            cursor: pointer;
+            display: block;
+            margin-top: 15px;
+        }
+
+        a:hover {
+            color: darkblue;
+        }
+
+    </style>
+</head>
+
+<body>
+    <!--<video autoplay muted loop>
+        <source src="images\video4.mp4" type="video/mp4">
+
+    </video>-->
+
+    <img src="/images/loc4.jpg">
+
+
+    <div class="verification-form">
+        <h2><b>Please verify your email account</b></h2>
+        <p>We have sent an email to you for verification. If you do not see the verification in your mailbox, check
+            your spam folder. Please contact us if you do not receive the verification email within a few minutes.</p>
+        <form id="verificationForm">
+            <label for="email">Email: </label>
+            <input type="email" id="email" name="email" required placeholder="enter your email address">
+
+            <button type="button" onclick="verify()">Verify</button>
+
+            <p class="p1">Already have an account? <a href="#" onclick="redirectToLogin()">Click here to login</a></p>
+        </form>
+    </div>
+
+    <script>
+        function verify() {
+
+            var email = document.getElementById('email').value;
+
+
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Invalid email format');
+                return;
+            }
+
+
+            alert('Verification successful!');
+        }
+
+        function redirectToLogin() {
+            alert('Redirecting to login page');
+            window.location.href = 'login2.html';
+        }
+    </script>
+
+</body>
+
+</html>
