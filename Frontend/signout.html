@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign out</title>
+    <style>
+        body {
+            background-color: #fff ;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            position: relative;
+            top: 210px;
+            left: 450px;
+            height: 250px;
+            width: 600px;
+            box-shadow: 10px 10px 40px;
+            border-radius: 40px;
+            background-color: #fff;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            overflow: hidden;
+        }
+
+        .box:hover {
+            transform: scale(1.02);
+            box-shadow: 15px 15px 160px rgba(0, 0, 0, 0.3);
+        }
+
+        .hover-effect {
+            position: absolute;
+            width: 130px;
+            height: 190px;
+            background-color: #4eaadf;
+            border-radius: 100%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .box:hover .hover-effect {
+            transform: translate(-50%, -50%) scale(10);
+        }
+
+        h2 {
+            position: relative;
+            top: 60px;
+            left: 160px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont;
+            z-index: 2;
+        }
+
+        button {
+            position: relative;
+            top: 70px;
+            left: 180px;
+            font-size: 20px;
+            border: none;
+            border-radius: 40px;
+            padding: 20px;
+            background-color: rgb(7, 7, 7);
+            color: #fff;
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        button:hover {
+            background-color: #030d1f;
+            transform: scale(1.05);
+        }
+
+        .b1 {
+            position: relative;
+            left: 190px;
+            transition: color 0.3s ease-in-out;
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        .b1:hover {
+            color: #002366;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="hover-effect"></div>
+        <h2>Do you want to sign out?</h2>
+        <p></p>
+        <button type="submit" onclick="signOut()">Sign out</button>
+        <button type="cancel" onclick="cancel()" class="b1">Cancel</button>
+    </div>
+
+    <script>
+        function signOut() {
+            window.location.href = 'landingPage.html';
+        }
+        function cancel() {
+            window.location.href = 'getInfo.html';
+        }
+    </script>
+</body>
+
+</html>
