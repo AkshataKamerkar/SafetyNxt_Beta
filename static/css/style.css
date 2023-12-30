@@ -75,16 +75,17 @@ header {
 .logo {
   display: flex;
   align-items: center;
-  column-gap: 1 rem;
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text-color);
+  column-gap: 1rem;
+  font-family: "Marck Script";
+  font-size : 30px;
+  font-weight: 600;
+  color: #2c71f6;
   text-transform: none;
 }
 
-.logo .bx {
-  font-size: 24px;
-  color: var(--main-color);
+.logo img{
+  width: 40px;
+  height: 40px;
 }
 
 .navbar {
