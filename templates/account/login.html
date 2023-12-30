@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -100,6 +98,7 @@
             left: 120px;
             top: -10px;
             font-family: system-ui, -apple-system, BlinkMacSystemFont;
+            color: white;
         }
 
         .form-group {
@@ -117,6 +116,17 @@
             margin-bottom: 10px;
             color: black;
         }
+        .l1{
+            position: relative;
+            top: 20px;
+            font-size: 20px;
+            left: 68px;
+        }
+        .i1{
+            position: relative;
+            top: -25px;
+            left: 70px;
+        }
 
         input {
             position: relative;
@@ -133,13 +143,16 @@
         }
 
         button {
+            position: relative;
+            top: -40px;
+            left: -6px;
             font-size: 15px;
             width: 100%;
             padding: 15px;
             color: #fffefe;
             background-color: #0b1a66;
             border: none;
-            border-radius: 10px;
+            border-radius: 30px;
             transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
             cursor: pointer;
         }
@@ -153,7 +166,7 @@
             position: relative;
             top: -16px;
             left: -10px;
-            color: darkblue;
+            color: rgb(100, 149, 218);
             text-decoration: none;
             cursor: pointer;
             display: block;
@@ -161,7 +174,7 @@
         }
 
         a:hover {
-            color: #071664;
+            color: rgb(100, 149, 218);
         }
 
         video {
@@ -176,7 +189,7 @@
             <source src="/static/img/video4.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-            
+
         <div class="login-container">
             <div class="login" id="loginForm">
                 <p class="p1"> <b>LOG IN</b></p>
@@ -192,10 +205,10 @@
                     <label for="id_password">Password:</label>
                     <input type="password" name="password" placeholder="Password" autocomplete="current-password" required id="id_password">
                 </div>
-<!--                <div class="form-group">-->
-<!--                    <label for="id_remember">Remember Me:</label>-->
-<!--                    <input type="checkbox" name="remember" id="id_remember">-->
-<!--                </div>-->
+                <div class="form-group">
+                    <label for="id_remember" class="l1">Remember Me:</label>
+                   <input type="checkbox" name="remember" id="id_remember" class="i1">
+               </div>
 
                 <button type="submit" class="btn btn-primary">LOG IN</button>
             </form>
