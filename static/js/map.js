@@ -36,6 +36,18 @@ function findRoute() {
     document.getElementById("success-image").style.display = "block";
 }
 
+// switch
+
+function reverseInputs() {
+    // Get the values from the starting and destination input boxes
+    var startInput = document.getElementById("start");
+    var destinationInput = document.getElementById("destination");
+
+    // Swap the values
+    var temp = startInput.value;
+    startInput.value = destinationInput.value;
+    destinationInput.value = temp;
+}
 
 
 
