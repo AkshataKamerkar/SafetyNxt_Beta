@@ -1,0 +1,259 @@
+@import url("https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700;800&family=Marck+Script&family=Poppins:wght@500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Marck+Script&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700;800&family=Aladin&family=Marck+Script&family=Poppins:wght@500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700;800&family=Aclonica&family=Aladin&family=Marck+Script&family=Poppins:wght@500;600;700&display=swap");
+
+/* Variables */
+:root {
+  --main-color: #2288ff;
+  --second-color: #192f6a;
+  --text-color: #314862;
+  --bg-color: #fff;
+  --bg2-color: #000;
+
+  /* Box Shadow */
+  --box-shadow: 2px 2px 18px rgb(14 52 54 / 15%);
+}
+
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+#map_aa291a4f1eafe5bbd01101418f32837c {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  left: 0%;
+  top: 0%;
+}
+.leaflet-container {
+  font-size: 1rem;
+}
+
+#logout-btn {
+  position: absolute;
+  top: 30px;
+  right: 15px;
+  z-index: 1003;
+  border: none;
+  cursor: pointer;
+  padding: 8px 22px;
+  background: var(--main-color);
+  color: var(--bg-color);
+  border-radius: 5rem;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+#logout-btn:hover {
+  background-color: #3492fd;
+}
+
+.slide {
+  height: 250px;
+  width: 390px;
+  top: 20px;
+  left: 50px;
+  position: absolute;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: 0.5s ease;
+  transform: translateX(-500px);
+  z-index: 1002;
+}
+
+.header {
+  width: 331px;
+  height: 70px;
+  left: 25px;
+  top: 1px;
+  position: absolute;
+}
+
+
+.title {
+  width: 312px;
+  height: 39px;
+  color: #005eb0;
+  font-family: "Aladin";
+  left: 80px;
+  pointer-events: none;
+  display: block;
+  font-size: 36px;
+  font-weight: 800;
+  margin-top: 2px;
+  margin-bottom: 0.67em;
+  margin-left: 0;
+  margin-right: 0;
+  position: absolute;
+  word-wrap: break-word;
+}
+
+.icon1 {
+  width: 40px;
+  height: 40px;
+  left: 30px;
+  top: 9px;
+  position: absolute;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  left: 30px;
+  top: 12px;
+  position: absolute;
+}
+
+.service-block {
+  width: 395px;
+  height: 61px;
+  left: -35px;
+  top: 45px;
+  margin-bottom: 2px;
+  position: relative;
+}
+
+ul li {
+  list-style: none;
+}
+
+ul li .service-title {
+  width: 312px;
+  height: 39px;
+  top: 10px;
+  position: absolute;
+  font-family: "poppins";
+  word-wrap: break-word;
+  color: #333;
+  font-weight: 500;
+  padding: 2px 0;
+  left: 70px;
+  font-size: 22px;
+  display: block;
+  text-transform: capitalize;
+  text-decoration: none;
+  transition: 0.2s ease-out;
+}
+
+ul li:hover .service-title {
+  color: #1a4fa5;
+}
+
+ul li a i {
+  width: 40px;
+  text-align: center;
+}
+
+input {
+  display: none;
+  visibility: hidden;
+  appearance: none;
+}
+
+.toggle {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  top: 33px;
+  left: 65px;
+  z-index: 1003;
+  cursor: pointer;
+  border-radius: 2px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.toggle .common {
+  position: absolute;
+  height: 2px;
+  width: 20px;
+  background-color: #1a4fa5;
+  border-radius: 50px;
+  transition: 0.3s ease;
+}
+
+.toggle .top_line {
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.toggle .middle_line {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.toggle .bottom_line {
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+input:checked ~ .toggle .top_line {
+  left: 2px;
+  top: 14px;
+  width: 25px;
+  transform: rotate(45deg);
+}
+
+input:checked ~ .toggle .bottom_line {
+  left: 2px;
+  top: 14px;
+  width: 25px;
+  transform: rotate(-45deg);
+}
+
+input:checked ~ .toggle .middle_line {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+input:checked ~ .slide {
+  transform: translateX(0);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.toggle_box {
+  width: 68px;
+  height: 34px;
+  display: block;
+  background-color: #2c71f6;
+  border-radius: 100px;
+  cursor: pointer;
+  position: relative;
+  transition: 0.5s;
+  left: 310px;
+  top: 11px;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+.circle {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  left: 0px;
+  background-color: #fff;
+  border-radius: 1000px;
+  margin: 5px;
+  transition: 0.5s;
+}
