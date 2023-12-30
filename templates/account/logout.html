@@ -9,30 +9,55 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background: linear-gradient(to bottom, #3498db, #2980b9); /* Blue gradient background */
+
         }
 
         /* Adjust the box style */
         div[style*="width: 60%"] {
-            width: 50% !important; /* Decreased width */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add box shadow */
+            position: relative;
+            left: -630px;
+            top: -20px;
+            width: 70% !important; /* Decreased width */
+            box-shadow: 0 0 90px black; /* Add box shadow */
             background: linear-gradient(to bottom, #fff, #fff); /* White gradient to maintain the white box */
-            border-radius: 5px; /* Preserve border-radius */
+            border-radius: 15px; /* Preserve border-radius */
             padding: 20px; /* Maintain padding */
             text-align: center; /* Preserve text alignment */
+
         }
 
         input:hover {
             background-color: #030d1f;
-            transform: scale(1.05);
+            transform: scale(1.06);
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        h1{
+            font-family: system-ui, -apple-system, BlinkMacSystemFont;
+            font-size: 20px;
+        }
+        p{
+            font-size: 20px;
+            color: #0d476e;
+            margin-bottom: 15px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont;
+        }
+        img{
+            position: relative;
+            top: 20px;
+            left: 100px;
+            height: 1000px;
+            width: 7500px;
+            z-index: -1;
+            opacity: 0.5;
         }
     </style>
 </head>
 <body>
+    <img src="/static/img/pic2.jpg">
     <div style="width: 60%; margin: 20px auto;">
         <div style="background-color: #fff;"> <!-- Ensures inner box color remains white -->
             <h1 style="font-size: 24px; margin-bottom: 20px; color: #333;">Sign Out</h1>
-            <p style="color: #555; margin-bottom: 15px;">Are you sure you want to sign out?</p>
+            <p>Are you sure you want to sign out?</p>
             <form style="display: inline-block;" method="post" action="/accounts/logout/">
                 <input type="hidden" name="csrfmiddlewaretoken" value="ijSYiit9iBLcT7CMXzOmb0ZTEDgvPFC9Md3sEww0noe4PUatBqSFwIV0A6q1CEKS">
                 {% csrf_token %}
