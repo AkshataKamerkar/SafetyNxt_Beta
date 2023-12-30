@@ -47,9 +47,9 @@
       <div class="container">
         <!-- Input fields for starting point and destination -->
         <div class="input-box">
-          <img class="icon-left" src="static/img/start location.png" />
+          <img class="icon-left" src="/static/img/start location.png" />
           <div class="bg-bar"></div>
-          <img class="icon-right" src="static/img/search.png" />
+          <img class="icon-right" src="/static/img/search.png" />
           <input
             type="text"
             id="start"
@@ -59,9 +59,9 @@
         </div>
 
         <div class="destination-box">
-          <img class="icon-left" src="static/img/destination.png" />
+          <img class="icon-left" src="/static/img/destination.png" />
           <div class="bg-bar"></div>
-          <img class="icon-right" src="static/img/search.png" />
+          <img class="icon-right" src="/static/img/search.png" />
           <input
             type="text"
             id="destination"
@@ -71,10 +71,10 @@
         </div>
 
         <!-- Rotate Icon -->
-        <img class="rotate-icon" src="static/img/dot.png" />
+        <img class="rotate-icon" src="/static/img/dot.png" />
 
         <!-- Additional Icon -->
-        <img class="additional-icon" src="static/img/switch.png" />
+        <img class="additional-icon" src="/static/img/switch.png" onclick="reverseInputs()"/>
 
         <!-- Find Route Box -->
         <div class="find-route-box">
@@ -83,18 +83,21 @@
           <a href="{% url 'main:map' %}">
             <button class="find-route-text" onclick="findRoute()">
               Start Monitoring
-            </button></a>
+            </button></a
+          >
         </div>
       </div>
     </div>
 
     <a href="{% url 'account_logout' %}">
       <button id="logout-btn" class="logout-button">
-        Logout
+        Cancel
       </button>
     </a>
 
     <div class="folium-map" id="map_aa291a4f1eafe5bbd01101418f32837c"></div>
+
+    <a href="/" class="logo"><img src="/static/img/logo.png" alt="">SafetyNXT</a>
 
     <script src="/static/js/map.js"></script>
   </body>

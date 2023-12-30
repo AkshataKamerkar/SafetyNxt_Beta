@@ -66,6 +66,7 @@ class GetLLs(TemplateView):
 
     template_name = 'map.html'
 
+# Main Page
 class Main(TemplateView):
 
     template_name = 'menu.html'

@@ -43,9 +43,8 @@
 
   <body>
     <button id="logout-btn" class="logout-button" onclick="logout()">
-      <a href="{% url 'main:info' %}" style="text-decoration: none; color: white;">Cancel</a>
+      <a href="{% url 'account_logout' %}"  style="text-decoration: none; color: white;">Log Out</a>
     </button>
-
 
     <label>
       <input type="checkbox" />
@@ -98,6 +97,8 @@
       </div>
     </label>
     <div class="folium-map" id="map_aa291a4f1eafe5bbd01101418f32837c"></div>
+
+    <a href="/" class="logo"><img src="/static/img/logo.png" alt="">SafetyNXT</a>
   </body>
 
   <script src="/static/js/menu.js"></script>
