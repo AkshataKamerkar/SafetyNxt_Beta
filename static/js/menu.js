@@ -64,10 +64,10 @@ toggleBoxes.forEach(function (toggleBox, index) {
       let circle = circles[index];
       if (checkbox.checked) {
           circle.style.transform = "translateX(34px)";
-          circle.style.backgroundColor = "#000"; // Set "on" color
+          circle.style.backgroundColor = "#fff"; // Set "on" color
       } else {
           circle.style.transform = "translateX(0px)";
-          circle.style.backgroundColor = "#fff"; // Set "off" color
+          circle.style.backgroundColor = "#000"; // Set "off" color
       }
   };
 });
