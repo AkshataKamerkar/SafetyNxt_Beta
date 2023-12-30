@@ -65,3 +65,7 @@ class LogInSignUp(TemplateView):
 class GetLLs(TemplateView):
 
     template_name = 'map.html'
+
+class Main(TemplateView):
+
+    template_name = 'menu.html'

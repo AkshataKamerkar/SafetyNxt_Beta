@@ -36,45 +36,8 @@ function findRoute() {
     document.getElementById("success-image").style.display = "block";
 }
 
-function toggleMenu() {
-    // Toggle the opacity property of the success image
-    var successImage = document.getElementById("success-image");
-    successImage.style.opacity = "0";
 
-    // Toggle the display property of the menu container
-    var menuContainer = document.getElementById("menu-container");
-    menuContainer.style.display =
-        menuContainer.style.display === "none" ||
-            menuContainer.style.display === ""
-            ? "block"
-            : "none";
-}
 
-let background_box = document.querySelectorAll(".background_box");
-let toggleBoxes = document.querySelectorAll(".toggle_box");
-let trafficToggleBox = document.getElementById("trafficCheckbox");
-let potholeToggleBox = document.getElementById("potholeCheckbox");
-
-let circles = document.querySelectorAll(".circle");
-
-// Add click event listeners to each toggle box
-toggleBoxes.forEach(function (toggleBox, index) {
-    toggleBox.onclick = function () {
-        // Toggle the checkbox
-        let checkbox = toggleBox.querySelector("input[type='checkbox']");
-        checkbox.checked = !checkbox.checked;
-
-        // Move the circle based on the checkbox state
-        let circle = circles[index];
-        if (checkbox.checked) {
-            circle.style.transform = "translateX(36px)";
-            circle.style.backgroundColor = "#000"; // Set "on" color
-        } else {
-            circle.style.transform = "translateX(0px)";
-            circle.style.backgroundColor = "#fff"; // Set "off" color
-        }
-    };
-});
 
 
 //   map 

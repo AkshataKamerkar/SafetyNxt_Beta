@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -48,9 +47,9 @@
       <div class="container">
         <!-- Input fields for starting point and destination -->
         <div class="input-box">
-          <img class="icon-left" src="/img/start location.png" />
+          <img class="icon-left" src="static/img/start location.png" />
           <div class="bg-bar"></div>
-          <img class="icon-right" src="/img/search.png" />
+          <img class="icon-right" src="static/img/search.png" />
           <input
             type="text"
             id="start"
@@ -60,9 +59,9 @@
         </div>
 
         <div class="destination-box">
-          <img class="icon-left" src="/img/destination.png" />
+          <img class="icon-left" src="static/img/destination.png" />
           <div class="bg-bar"></div>
-          <img class="icon-right" src="/img/search.png" />
+          <img class="icon-right" src="static/img/search.png" />
           <input
             type="text"
             id="destination"
@@ -72,61 +71,28 @@
         </div>
 
         <!-- Rotate Icon -->
-        <img class="rotate-icon" src="/img/dot.png" />
+        <img class="rotate-icon" src="static/img/dot.png" />
 
         <!-- Additional Icon -->
-        <img class="additional-icon" src="/img/switch.png" />
+        <img class="additional-icon" src="static/img/switch.png" />
 
         <!-- Find Route Box -->
         <div class="find-route-box">
           <div class="background-bar"></div>
           <!-- Button to trigger findRoute function -->
-          <button class="find-route-text" onclick="findRoute()">
-            Start Monitoring
-          </button>
+          <a href="{% url 'main:map' %}">
+            <button class="find-route-text" onclick="findRoute()">
+              Start Monitoring
+            </button></a>
         </div>
       </div>
     </div>
 
-    <img
-      id="success-image"
-      src="/img/menu-bar.png"
-      alt="Success"
-      onclick="toggleMenu()"
-    />
-
-    <div id="menu-container">
-      <div class="frame"></div>
-      <div class="header">
-        <div class="title">Select Service</div>
-        <img class="icon" src="/img/service.png" />
-      </div>
-      <div class="service-block">
-        <div class="service-title">Traffic Monitoring</div>
-        <img class="icon" src="/static/img/traffic1.png" />
-        <!-- toggle button -->
-        <label class="toggle_box">
-          <input type="checkbox" id="Checkbox" />
-          <div class="circle"></div>
-        </label>
-      </div>
-      <div class="service-block">
-        <div class="service-title">Accident Detection</div>
-        <img class="icon" src="/static/img/accident1.png" />
-        <label class="toggle_box">
-          <input type="checkbox" id="checkbox" />
-          <div class="circle"></div>
-        </label>
-      </div>
-      <div class="service-block">
-        <div class="service-title">Pothole Identification</div>
-        <img class="icon" src="/static/img/pothole.png" />
-        <label class="toggle_box">
-          <input type="checkbox" id="Checkbox" />
-          <div class="circle"></div>
-        </label>        
-      </div>
-    </div>
+    <a href="{% url 'account_logout' %}">
+      <button id="logout-btn" class="logout-button">
+        Logout
+      </button>
+    </a>
 
     <div class="folium-map" id="map_aa291a4f1eafe5bbd01101418f32837c"></div>
 
