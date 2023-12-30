@@ -9,21 +9,21 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-
+            background: linear-gradient(rgba(255, 255, 200, 0.5), rgba(255, 255, 255, 0.5)), url("/images/pic2.jpg") no-repeat center center fixed;
+            background-size: cover;
         }
 
-        /* Adjust the box style */
-        div[style*="width: 60%"] {
+        div {
+            width: 60%;
+            margin: 20px auto;
+            box-shadow: 0 0 90px black;
+            background: linear-gradient(to bottom, #fff, #fff);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
             position: relative;
-            left: -630px;
-            top: -20px;
-            width: 70% !important; /* Decreased width */
-            box-shadow: 0 0 90px black; /* Add box shadow */
-            background: linear-gradient(to bottom, #fff, #fff); /* White gradient to maintain the white box */
-            border-radius: 15px; /* Preserve border-radius */
-            padding: 20px; /* Maintain padding */
-            text-align: center; /* Preserve text alignment */
-
+            top: -10px;
+            z-index: 1;
         }
 
         input:hover {
@@ -31,39 +31,31 @@
             transform: scale(1.06);
             transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
-        h1{
+
+        h1 {
             font-family: system-ui, -apple-system, BlinkMacSystemFont;
-            font-size: 20px;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
         }
-        p{
+
+        p {
             font-size: 20px;
             color: #0d476e;
             margin-bottom: 15px;
             font-family: system-ui, -apple-system, BlinkMacSystemFont;
         }
-        img{
-            position: relative;
-            top: 20px;
-            left: 100px;
-            height: 1000px;
-            width: 7500px;
-            z-index: -1;
-            opacity: 0.5;
-        }
     </style>
 </head>
 <body>
-    <img src="/images/pic2.jpg">
-    <div style="width: 60%; margin: 20px auto;">
-        <div style="background-color: #fff;"> <!-- Ensures inner box color remains white -->
-            <h1 style="font-size: 24px; margin-bottom: 20px; color: #333;">Sign Out</h1>
-            <p>Are you sure you want to sign out?</p>
-            <form style="display: inline-block;" method="post" action="/accounts/logout/">
-                <input type="hidden" name="csrfmiddlewaretoken" value="ijSYiit9iBLcT7CMXzOmb0ZTEDgvPFC9Md3sEww0noe4PUatBqSFwIV0A6q1CEKS">
-                {% csrf_token %}
-                <input type="submit" style="padding: 10px 20px; background-color: #3498db; color: #fff; border: none; border-radius: 3px; cursor: pointer;" value="Sign Out">
-            </form>
-        </div>
+    <div>
+        <h1>Sign Out</h1>
+        <p>Are you sure you want to sign out?</p>
+        <form style="display: inline-block;" method="post" action="/accounts/logout/">
+            <input type="hidden" name="csrfmiddlewaretoken" value="ijSYiit9iBLcT7CMXzOmb0ZTEDgvPFC9Md3sEww0noe4PUatBqSFwIV0A6q1CEKS">
+            {% csrf_token %}
+            <input type="submit" style="padding: 10px 20px; background-color: #3498db; color: #fff; border: none; border-radius: 3px; cursor: pointer; position: relative; left: -0px;" value="Sign Out">
+        </form>
     </div>
 </body>
 </html>
