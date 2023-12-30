@@ -3,6 +3,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700;800&family=Aladin&family=Marck+Script&family=Poppins:wght@500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700;800&family=Aclonica&family=Aladin&family=Marck+Script&family=Poppins:wght@500;600;700&display=swap");
 
+:root {
+  --main-color: #2288ff;
+  --second-color: #192f6a;
+  --text-color: #314862;
+  --bg-color: #fff;
+  --bg2-color: #000;
+
+  /* Box Shadow */
+  --box-shadow: 2px 2px 18px rgb(14 52 54 / 15%);
+}
+
+
+
 /* element */
 
 html,
@@ -223,7 +236,7 @@ button.find-route-text:hover {
   color: #333;
 }
 
-#cancel-btn {
+#logout-btn {
   position: absolute;
   top: 30px;
   right: 15px;
@@ -235,10 +248,10 @@ button.find-route-text:hover {
   color: var(--bg-color);
   border-radius: 5rem;
   font-weight: 600;
-  font-size: 16px
+  font-size: 16px;
 }
 
-#cancel-btn:hover {
+#logout-btn:hover {
   background-color: #1a4fa5;
 }
 
