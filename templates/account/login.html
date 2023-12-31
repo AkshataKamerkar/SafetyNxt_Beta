@@ -181,6 +181,18 @@
             color: rgb(100, 149, 218);
         }
 
+        .a2{
+            position: relative;
+            top: -10px;
+            left: 210px;
+            font-size: 19px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont;
+        }
+        .a2:hover{
+            color: black;
+            text-decoration: underline;
+        }
+
         video {
             width: 100%;
             height: auto;
@@ -215,6 +227,7 @@
                </div>
 
                 <button type="submit" class="btn btn-primary">LOG IN</button>
+                <a href="/accounts/password/reset/" class="a2"> forgot password?</a>
             </form>
 
           <p class="p2">New user? <br><a href="{{ signup_url }}">Sign up here</a></p>
