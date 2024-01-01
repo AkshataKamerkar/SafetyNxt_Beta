@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html>
+{% extends "account/base_entrance.html" %}
+{% load i18n %}
+
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,7 +42,8 @@
         }
         button{
             position: relative;
-            top: -43px;
+
+            top: -88px;
             border: none;
             border-radius: 10px;
             padding: 7px;
@@ -69,40 +71,44 @@
         }
         input{
             position: relative;
-            top:13px;
+            top: -79px;
             left: 0px;
             height: 25px;
             width: 370px;
             padding: 2px;
             border-radius: 7px;
             border: 1px solid black;
-            background-color: ;
+            
 
         }
         </style>
-
     </head>
-    <body>
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        {% include "account/snippets/already_logged_in.html" %}
+    {% endif %}
+
     <div class="box">
-    <h1>Password Reset</h1>
-    <p>
-       <b><i>  Forgotten your password?</b></i> <br>Enter your email address below, and we'll send you an email allowing you to reset it.
+        <h1>Password Reset</h1>
+        <p>
+        <b><i>  Forgotten your password?</i></b> <br>Enter your email address below, and we'll send you an email allowing you to reset it.
+        </p>
+
+        {% url 'account_reset_password' as reset_url %}
         <input type="email" name="email" placeholder="enter your email address">
-    </p>
 
-    <form method="post" action="/accounts/password/reset/">
-        <input type="hidden" name="csrfmiddlewaretoken" value="xlCNqsX4kEpEEhA5MzwbYMquV1uhRISKn0jmdIe8NxVpf6RQtDPsa0JK64yljZsd">
+        <form method="post" action="{{ reset_url }}">
+            {% csrf_token %}
+            {# Render your form fields here #}
+            {# Example: #}
+            <!-- Your form fields go here -->
 
+            <button type="submit">{% trans 'Reset My Password' %}</button>
+        </form>
 
-        <!-- Your form fields go here -->
+        <p class="p1">Please contact us if you have any trouble resetting your password.</p>
 
-        <button type="submit">Reset My Password</button>
-    </form>
-
-    <p class="p1">Please contact us if you have any trouble resetting your password.</p>
-
-</div>
-
-
-    </body>
-</html>
+    </div>
+{% endblock content %}
