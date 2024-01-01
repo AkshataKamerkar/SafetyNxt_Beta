@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,7 +44,7 @@
         .login {
             position: relative;
             left: 0px;
-            height: 105%;
+            height: 106%;
             width: 400px;
             background-color: white;
             box-shadow: 10px 10px 25px black;
@@ -96,9 +97,8 @@
             font-size: 25px;
             position: relative;
             left: 120px;
-            top: -35px;
+            top: -30px;
             font-family: system-ui, -apple-system, BlinkMacSystemFont;
-            color: white;
         }
 
         .form-group {
@@ -116,21 +116,6 @@
             margin-bottom: 10px;
             color: black;
         }
-        .l1{
-            position: relative;
-            top: 0px;
-            font-size: 20px;
-            left: 68px;
-
-        }
-        .i1{
-            position: relative;
-            height: 30px;
-            width: 30px;
-            top: -36px;
-            left: 215px;
-
-        }
 
         input {
             position: relative;
@@ -147,16 +132,13 @@
         }
 
         button {
-            position: relative;
-            top: -40px;
-            left: -6px;
             font-size: 15px;
             width: 100%;
             padding: 15px;
             color: #fffefe;
             background-color: #0b1a66;
             border: none;
-            border-radius: 15px;
+            border-radius: 10px;
             transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
             cursor: pointer;
         }
@@ -170,7 +152,7 @@
             position: relative;
             top: -16px;
             left: -10px;
-            color: rgb(100, 149, 218);
+            color: darkblue;
             text-decoration: none;
             cursor: pointer;
             display: block;
@@ -178,16 +160,14 @@
         }
 
         a:hover {
-            color: rgb(100, 149, 218);
+            color: #071664;
         }
-
         .a2{
             position: relative;
-            top: -50px;
+            top: -10px;
             left: 210px;
             font-size: 19px;
             font-family: system-ui, -apple-system, BlinkMacSystemFont;
-            color: #0b1a66;
         }
         .a2:hover{
             color: black;
@@ -201,39 +181,32 @@
         }
     </style>
 </head>
-    <body>
-        <video autoplay muted loop>
-            <source src="/static/img/video4.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
 
-        <div class="login-container">
-            <div class="login" id="loginForm">
-                <p class="p1"> <b>LOG IN</b></p>
+<body>
+    <video autoplay muted loop>
+        <source src="images\video4.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
-            <form method="post" action="/accounts/login/" tags="entrance,login">
-                <input type="hidden" name="csrfmiddlewaretoken" value="OYazpznNFUWQ3rCiP7oX9MyBLCj1WEchEwjvrsw9l1VyeNKLRx355UYfj9LXy85L">
-                {% csrf_token %}
+    <div class="login-container">
+        <div class="login" id="loginForm">
+            <p class="p1"> <b>LOG IN</b></p>
+            <form action="#" method="post">
                 <div class="form-group">
-                    <label for="id_login">Username:</label>
-                        <input type="text" name="login" placeholder="Username" autocomplete="username" maxlength="150" required id="id_login">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required placeholder="username">
                 </div>
                 <div class="form-group">
-                    <label for="id_password">Password:</label>
-                    <input type="password" name="password" placeholder="Password" autocomplete="current-password" required id="id_password">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required placeholder="password">
                 </div>
-                <div class="form-group">
-                    <label for="id_remember" class="l1">Remember Me:</label>
-                   <input type="checkbox" name="remember" id="id_remember" class="i1">
-               </div>
-
-                <button type="submit" class="btn btn-primary">LOG IN</button>
-                <a href="/accounts/password/reset/" class="a2"> forgot password?</a>
+                <button type="submit">LOG IN</button>
+                <a href="forgotpwd.html" class="a2"> forgot password?</a>
             </form>
-
-          <p class="p2">New user? <br><a href="{{ signup_url }}">Sign up here</a></p>
+            <p class="p2">New user? <br><a href="signup2.html">Sign up here</a></p>
         </div>
     </div>
 
     </body>
+
 </html>
