@@ -184,7 +184,6 @@
                 </div>
             </div>
         </div>
-/static/
     </section>
 
     <!-- contact us -->
@@ -237,32 +236,32 @@
                     <div class="formBox">
                         <form method="POST" action="/">
                             {% csrf_token %}
-                            <div class="inputBox w20">
+                            <div class="inputBox w50">
                                 {{ form.fname }}
                                 <span>First Name</span>
                             </div>
 
-                            <div class="inputBox w40">
+                            <div class="inputBox w50">
                                 {{ form.lname }}
                                 <span>Last Name</span>
                             </div>
 
-                            <div class="inputBox w40">
+                            <div class="inputBox w50">
                                 {{ form.email }}
                                 <span>Email Address</span>
                             </div>
 
-                            <div class="inputBox w40">
+                            <div class="inputBox w50">
                                 {{ form.mob }}
                                 <span>Mobile Number</span>
                             </div>
 
-                            <div class="inputBox w80">
+                            <div class="inputBox w100">
                                 {{ form.msg }}
                                 <span>Write Your Message Here...</span>
                             </div>
 
-                            <div class="inputBox w50">
+                            <div class="inputBox w100">
                                 <input type="submit" value="Send" required>
                             </div>
 

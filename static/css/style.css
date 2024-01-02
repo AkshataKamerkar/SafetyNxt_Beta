@@ -600,6 +600,7 @@ header {
   width: calc(100% - 150px);
   height: 100%;
   box-shadow: 0 50px 50px rgba(0, 0, 0, 0.5);
+  display: flex;
 }
 
 .container3 .contactForm h2 {
