@@ -231,41 +231,38 @@
 
                 </div>
 
-                <div class="contactForm">
+                                <div class="contactForm">
                     <h2>Send A Message</h2>
                     <div class="formBox">
-                        <form method="POST" action="/">
-                            {% csrf_token %}
-                            <div class="inputBox w50">
-                                {{ form.fname }}
-                                <span>First Name</span>
-                            </div>
 
-                            <div class="inputBox w50">
-                                {{ form.lname }}
-                                <span>Last Name</span>
-                            </div>
+                        <div class="inputBox w50">
+                            <input type="text" name="" required>
+                            <span>First Name</span>
+                        </div>
 
-                            <div class="inputBox w50">
-                                {{ form.email }}
-                                <span>Email Address</span>
-                            </div>
+                        <div class="inputBox w50">
+                            <input type="text" name="" required>
+                            <span>Last Name</span>
+                        </div>
 
-                            <div class="inputBox w50">
-                                {{ form.mob }}
-                                <span>Mobile Number</span>
-                            </div>
+                        <div class="inputBox w50">
+                            <input type="email" name="" required>
+                            <span>Email Address</span>
+                        </div>
 
-                            <div class="inputBox w100">
-                                {{ form.msg }}
-                                <span>Write Your Message Here...</span>
-                            </div>
+                        <div class="inputBox w50">
+                            <input type="tel" name="" required>
+                            <span>Mobile Number</span>
+                        </div>
 
-                            <div class="inputBox w100">
-                                <input type="submit" value="Send" required>
-                            </div>
+                        <div class="inputBox w100">
+                            <textarea required></textarea>
+                            <span>Write Your Message Here...</span>
+                        </div>
 
-                        </form>
+                        <div class="inputBox w100">
+                            <input type="submit" value="Send" required>
+                        </div>
                     </div>
                 </div>
             </div>
