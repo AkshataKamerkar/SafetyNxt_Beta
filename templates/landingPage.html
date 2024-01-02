@@ -231,22 +231,25 @@
 
                 </div>
 
+
                 <div class="contactForm">
                     <h2>Send A Message</h2>
-                    <div class="formBox">
+
+                    <form method="POST" action="/">
+                        {% csrf_token %}
 
                         <div class="inputBox w50">
-                            <input type="text" name="" required>
+                            {{ form.fname }}
                             <span>First Name</span>
                         </div>
 
                         <div class="inputBox w50">
-                            {{ form.fname }}
+                            {{ form.lname }}
                             <span>Last Name</span>
                         </div>
 
                         <div class="inputBox w50">
-                            {{ form.lname }}
+                            {{ form.email }}
                             <span>Email Address</span>
                         </div>
 
@@ -261,9 +264,9 @@
                         </div>
 
                         <div class="inputBox w100">
-                            <input type="submit" value="Send" required>
+                             <input type="submit" value="Send" required />
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
