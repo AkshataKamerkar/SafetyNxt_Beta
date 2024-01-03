@@ -492,7 +492,6 @@ header {
   width: 50%;
   height: 100%;
   background: var(--main-color);
-
 }
 
 .container3 {
@@ -608,7 +607,7 @@ header {
   font-weight: 500;
 }
 
-.container3 .contactForm .formBox {
+.container3 .contactForm form {
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -616,22 +615,22 @@ header {
   padding-top: 30px;
 }
 
-.container3 .contactForm .formBox,
+.container3 .contactForm form,
 .inputBox {
   position: relative;
   margin: 0 50px 35px 0;
 }
 
-.container3 .contactForm .formBox .inputBox .w50 {
+.container3 .contactForm form .inputBox .w50 {
   width: 47%;
 }
 
-.container3 .contactForm .formBox .inputBox .w100 {
+.container3 .contactForm form .inputBox .w100 {
   width: 100%;
 }
 
-.container3 .contactForm .formBox .inputBox input,
-.container3 .contactForm .formBox .inputBox textarea {
+.container3 .contactForm form .inputBox input,
+.container3 .contactForm form .inputBox textarea {
   width: 100%;
   padding: 5px 0;
   resize: none;
@@ -643,12 +642,12 @@ header {
   outline: none;
 }
 
-.container3 .contactForm .formBox .inputBox textarea {
+.container3 .contactForm form .inputBox textarea {
   height: 120px;
   width: 550px;
 }
 
-.container3 .contactForm .formBox .inputBox span {
+.container3 .contactForm form .inputBox span {
   position: absolute;
   left: 0;
   padding: 5px 0;
@@ -659,10 +658,10 @@ header {
   pointer-events: none;
 }
 
-.container3 .contactForm .formBox .inputBox input:focus ~ span,
-.container3 .contactForm .formBox .inputBox textarea:focus ~ span,
-.container3 .contactForm .formBox .inputBox input:valid ~ span,
-.container3 .contactForm .formBox .inputBox textarea:valid ~ span {
+.container3 .contactForm form .inputBox input:focus ~ span,
+.container3 .contactForm form .inputBox textarea:focus ~ span,
+.container3 .contactForm form .inputBox input:valid ~ span,
+.container3 .contactForm form .inputBox textarea:valid ~ span {
   transform: translateY(-20px);
   font-size: 12px;
   font-weight: 400;
@@ -670,7 +669,7 @@ header {
   color: #ff568c;
 }
 
-.container3 .contactForm .formBox .inputBox input[type="submit"] {
+.container3 .contactForm form .inputBox input[type="submit"] {
   position: relative;
   cursor: pointer;
   background: #0f3959;
@@ -680,7 +679,7 @@ header {
   padding: 12px;
 }
 
-.container3 .contactForm .formBox .inputBox input[type="submit"]:hover {
+.container3 .contactForm form .inputBox input[type="submit"]:hover {
   background: #ff568c;
 }
 
