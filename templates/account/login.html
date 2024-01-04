@@ -178,6 +178,10 @@
             height: auto;
             opacity: 0.62;
         }
+
+
+
+
     </style>
 </head>
     <body>
@@ -201,13 +205,15 @@
                     <label for="id_password">Password:</label>
                     <input type="password" name="password" placeholder="Password" autocomplete="current-password" required id="id_password">
                 </div>
-                <div class="form-group">
-                    <label for="id_remember" class="l1">Remember Me:</label>
-                   <input type="checkbox" name="remember" id="id_remember" class="i1">
-               </div>
+<!--                <div class="form-group">-->
+<!--                    <label for="id_remember" class="l1">Remember Me:</label>-->
+<!--                   <input type="checkbox" name="remember" id="id_remember" class="i1">-->
+<!--               </div>-->
 
                 <button type="submit" class="btn btn-primary">LOG IN</button>
-                <a href="/accounts/password/reset/" class="a2"> forgot password?</a>
+
+                <a style="text-align: center;" href="/accounts/password/reset/" class="a2"> forgot password?</a>
+
             </form>
 
           <p class="p2">New user? <br><a href="{{ signup_url }}">Sign up here</a></p>
