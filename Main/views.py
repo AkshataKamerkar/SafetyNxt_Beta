@@ -3,6 +3,9 @@ from django.views.generic import TemplateView, FormView
 from django.views.generic.edit import FormView
 from .forms import ContactForm
 from .models import Contact
+from .utils import send_email_to_client
+from django.contrib import messages
+
 '''
     Total 5 Routes 
         - LandingPage      : Nav, MainVideo/ MainModel, Services, Features, Contact Form, Testimonials, Footer 
@@ -44,9 +47,27 @@ class LandingPage(FormView):
     form_class = ContactForm
     success_url = '/'  # Redirect URL after successful form submission
 
+
     def form_valid(self, form):
         form.save()  # This saves the form data to the database using the model
+
+        # To send the contact mail
+        ls_email = []
+        email = form.cleaned_data['email']
+        fname = form.cleaned_data['fname']
+        # To get the latest mail
+        ls_email.append(email)
+
+        # Calling the actual function
+        send_email_to_client(ls_email,fname)
+
+        # To avoid sending mail to the previous users
+        ls_email.clear()
+
+
         return super().form_valid(form)
+
+
 
 
 
@@ -70,3 +91,4 @@ class GetLLs(TemplateView):
 class Main(TemplateView):
 
     template_name = 'menu.html'
+
