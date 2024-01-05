@@ -4,6 +4,7 @@ from django.views.generic.edit import FormView
 from .forms import ContactForm
 from .models import Contact
 from .utils import send_email_to_client
+from django.contrib import messages
 
 '''
     Total 5 Routes 
@@ -46,6 +47,7 @@ class LandingPage(FormView):
     form_class = ContactForm
     success_url = '/'  # Redirect URL after successful form submission
 
+
     def form_valid(self, form):
         form.save()  # This saves the form data to the database using the model
 
@@ -61,6 +63,7 @@ class LandingPage(FormView):
 
         # To avoid sending mail to the previous users
         ls_email.clear()
+
 
         return super().form_valid(form)
 
