@@ -183,7 +183,7 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'datasciencetestmail@gmail.com'
 EMAIL_HOST_PASSWORD = 'ckya zcpe kraf clss'
-EMAIL_USE_TLS = True
+
 
 
 
