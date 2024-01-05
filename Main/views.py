@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, FormView
 from django.views.generic.edit import FormView
+from django.http import JsonResponse
+from django.views import View
 from .forms import ContactForm
 from .models import Contact
 from .utils import send_email_to_client
@@ -87,6 +89,7 @@ class LogInSignUp(TemplateView):
 class GetLLs(TemplateView):
 
     template_name = 'map.html'
+
 
 # Main Page
 class Main(TemplateView):
