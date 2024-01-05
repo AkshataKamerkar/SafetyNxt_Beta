@@ -64,6 +64,7 @@ class LandingPage(FormView):
         # To avoid sending mail to the previous users
         ls_email.clear()
 
+        messages.info(self.request,'Your message has been successfully submitted !! ')
 
         return super().form_valid(form)
 

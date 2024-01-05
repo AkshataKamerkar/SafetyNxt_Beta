@@ -15,9 +15,16 @@
 </head>
 <body>
 
-
     <!--Navbar-->
     <header>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="bg-gradient text-center text-white py-4">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+        {% endif %}
         <div class="nav container">
 
             <!-- Logo  -->
