@@ -5,6 +5,9 @@
     <title>select-service</title>
 
     <link rel="stylesheet" href="/static/css/menu.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -39,11 +42,22 @@
       content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
+
+    <style>
+		body {
+			margin: 0;
+			padding: 0;
+		}
+	</style>
+
   </head>
 
   <body>
+
+
+
     <button id="logout-btn" class="logout-button" onclick="logout()">
-      <a href="{% url 'account_logout' %}"  style="text-decoration: none; color: white;">Log Out</a>
+      <a href="{% url 'main:info' %}"  style="text-decoration: none; color: white;">STOP</a>
     </button>
 
     <label>
@@ -96,12 +110,47 @@
         </ul>
       </div>
     </label>
-    <div class="folium-map" id="map_aa291a4f1eafe5bbd01101418f32837c"></div>
+    <div id="map" style="width:100%; height: 100vh"></div>
 
     <a href="/" class="logo"><img src="/static/img/logo.png" alt="">SafetyNXT</a>
   </body>
 
   <script src="/static/js/menu.js"></script>
+
+  <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+
+		var map = L.map('map').setView([28.2380, 83.9956], 11);
+		mapLink = "<a href='http://openstreetmap.org'>OpenStreetMap</a>";
+		L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: 'Leaflet &copy; ' + mapLink + ', contribution', maxZoom: 18 }).addTo(map);
+
+
+		var marker = L.marker([28.2380, 83.9956]).addTo(map);
+        var cor;
+		map.on('click', function (e) {
+			console.log(e)
+			var newMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+			L.Routing.control({
+				waypoints: [
+					L.latLng(28.2380, 83.9956),
+					L.latLng(e.latlng.lat, e.latlng.lng)
+				]
+			}).on('routesfound', function (e) {
+				var routes = e.routes;
+				console.log(routes);
+                cor = e.routes[0].coordinates
+
+
+
+			}).addTo(map);
+		});
+
+
+	</script>
+
 </html>
 
 

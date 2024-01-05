@@ -1,12 +1,14 @@
 from django.shortcuts import render
+from django.urls import reverse
 from django.views.generic import TemplateView, FormView
 from django.views.generic.edit import FormView
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.views import View
 from .forms import ContactForm
 from .models import Contact
 from .utils import send_email_to_client
 from django.contrib import messages
+from .functions import get_location, get_latitude_longitude
 
 '''
     Total 5 Routes 
@@ -22,27 +24,8 @@ from django.contrib import messages
         - get_loc    : On GetLLs Page    
 '''
 
-# Creating the Landing Page
-# LandinPage is a FormView since we have to add a Contact Us form in it
-# class LandingPage(FormView):         # Jb tk form define nhi krte tb tk
-#                                          # FormView mt do, if diya toh django usse load hi nhi krta
-#
-#     template_name = 'landingPage.html'
-#     form_class = contactForm
-#     success_url = '/'
-#
-#     def form_valid(self, form):
-#         new_object = contact.objects.create(
-#             fname = form.cleaned_data['fname'],
-#             lname = form.cleaned_data['lname'],
-#             email = form.cleaned_data['email'],
-#             mob = form.cleaned_data['mob'],
-#             msg = form.cleaned_data['msg']
-#
-#         )
-#
-#         return super().form_valid(form)
-
+start_lls = None
+end_lls = None
 
 class LandingPage(FormView):
     template_name = 'landingPage.html'
@@ -70,6 +53,14 @@ class LandingPage(FormView):
 
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        global start_lls, end_lls
+
+        context['start_lls'] = start_lls
+        context['end_lls'] = end_lls
+
+        return context
 
 
 
@@ -90,9 +81,34 @@ class GetLLs(TemplateView):
 
     template_name = 'map.html'
 
+    def post(self,request,*args,**kwargs):
+
+        start = request.POST.get('start')
+        destination = request.POST.get('destination')
+
+        start_lls = get_latitude_longitude(start)
+        end_lls = get_latitude_longitude(destination)
+
+        request.session['start_lls'] = start_lls
+        request.session['end_lls'] = end_lls
+
+        return HttpResponseRedirect(reverse(LandingPage))
+
+
 
 # Main Page
-class Main(TemplateView):
+class Main(GetLLs,TemplateView):
 
     template_name = 'menu.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        global start_lls, end_lls
+
+        start_lls = self.request.session.get('start_lls')
+        end_lls = self.request.session.get('end_lls')
+
+        context['start_lls'] = self.start_lls
+        context['end_lls'] = self.end_lls
+
+        return context

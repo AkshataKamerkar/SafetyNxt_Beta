@@ -1,5 +1,4 @@
-import geocoder
-from geopy import Nominatim
+from geopy.geocoders import Nominatim
 
 '''
     This file will contain all the functions that are used in backend for user input manipulation as well as to fetch the appropriate cctv id's
@@ -8,24 +7,20 @@ from geopy import Nominatim
 
 
 # Get ll's from loc
-def get_latitude_longitude(locations):
-    '''
-    :param locations: List containing two place names or addresses entered by the user
-    :return: List containing [latitude, longitude] of each specified place
-    '''
-    geolocator = Nominatim(user_agent="my_geocoder")  # Create a geolocator object
-    coordinates_list = []
 
-    for place in locations:
-        location = geolocator.geocode(place)  # Use geocode() to get the location data
-        if location is not None:
-            latitude, longitude = location.latitude, location.longitude
-            coordinates_list.append((latitude, longitude))
-        else:
-            print("Could not find the location:", place)
-            coordinates_list.append(None)
 
-    return coordinates_list
+def get_latitude_longitude(place_name):
+    geolocator = Nominatim(user_agent="geoapiExercises")
+
+    location = geolocator.geocode(place_name)
+
+    if location:
+        latitude = location.latitude
+        longitude = location.longitude
+        return [latitude, longitude]
+    else:
+        return [None, None]
+
 
 # Getting location from the ll's
 def get_location(latitude, longitude):
