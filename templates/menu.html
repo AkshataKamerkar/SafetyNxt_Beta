@@ -123,39 +123,85 @@
 
   <script>
 
-		var map = L.map('map').setView([{{ start_lls.0 }}, {{ start_lls.1 }}], 11);
+		var map = L.map('map').setView([0,0], 13);
 		mapLink = "<a href='http://openstreetmap.org'>OpenStreetMap</a>";
 		L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: 'Leaflet &copy; ' + mapLink + ', contribution', maxZoom: 18 }).addTo(map);
 
-        var startLatLng = [{{ start_lls.0 }}, {{ start_lls.1 }}];
-        var endLatLng = [{{ end_lls.0 }}, {{ end_lls.1 }}];
+<!--        var fromMarker, toMarker, routeControl;-->
 
-        var startMarker = L.marker(startLatLng).addTo(map);
-        var endMarker = L.marker(endLatLng).addTo(map);
+<!--		function getRoute(){-->
 
-
-
-        console.log(startLatLng);
-        var cor;
-		map.on('click', function (e) {
-			console.log(e)
-			var newMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
-			L.Routing.control({
-				waypoints: [
-					L.latLng({{ start_lls.0 }}, {{ start_lls.1 }}),
-					L.latLng(e.latlng.lat, e.latlng.lng)
-				]
-			}).on('routesfound', function (e) {
-				var routes = e.routes;
-				console.log(routes);
-                cor = e.routes[0].coordinates
+<!--			var fromLocation = {{ start_lls }}-->
+<!--			var toLocation = {{ end_lls }}-->
 
 
+<!--			if(!fromLocation || !toLocation){-->
+<!--				alert("Please Provide location")-->
+<!--				return-->
+<!--			}-->
 
-			}).addTo(map);
-		});
+<!--			if(fromMarker){-->
+<!--				map.removeLayer(fromMarker)-->
+<!--			}-->
+
+<!--			if(toMarker){-->
+<!--				map.removeLayer(toMarker)-->
+<!--			}-->
+
+<!--			if(routeControl){-->
+<!--				map.removeControl(routeControl)-->
+<!--			}-->
 
 
+<!--			axios.get("https://nominatim.openstreetmap.org/search",{-->
+<!--				params: {-->
+<!--					format:'json',-->
+<!--					q:fromLocation-->
+
+<!--			}).then(function(response){-->
+
+<!--				var fromLat = response.data[0].lat-->
+<!--				var fromLon = response.data[0].lon-->
+<!--				fromMarker = L.marker([fromLat,fromLon]).addTo(map)-->
+<!--				map.setView([fromLat,fromLon],13)-->
+
+<!--				return axios.get("https://nominatim.openstreetmap.org/search",{-->
+<!--					params: {-->
+<!--						format:'json',-->
+<!--						q:toLocation-->
+<!--					}-->
+
+<!--				}).then(function(response){-->
+
+<!--					var toLat = response.data[0].lat-->
+<!--					var toLon = response.data[0].lon-->
+<!--					toMarker = L.marker([toLat,toLon]).addTo(map)-->
+
+<!--					routeControl = L.Routing.control({-->
+
+<!--						waypoints:[-->
+<!--							L.latLng(fromLat,fromLon),-->
+<!--							L.latLng(toLat,toLon),-->
+<!--						],-->
+
+<!--						router:L.Routing.osrmv1({-->
+<!--							serviceUrl:"https://router.project-osrm.org/route/v1"-->
+<!--						})-->
+<!--					}).addTo(map)-->
+<!--				})-->
+
+<!--			}).catch(function(error){-->
+<!--				console.log("Check error",error)-->
+<!--				alert(error)-->
+
+<!--			})-->
+<!--		}-->
+
+
+<!--        document.addEventListener("DOMContentLoaded", function () {-->
+<!--            getRoute();-->
+
+<!--        });-->
 
 
 	</script>

@@ -15,15 +15,15 @@ from .functions import get_location, get_latitude_longitude
     Total 5 Routes 
         - LandingPage      : Nav, MainVideo/ MainModel, Services, Features, Contact Form, Testimonials, Footer 
         - About Page       : Nav, About Content, Footer 
-        - LogInSignUp Page : Nav, LogIn/SignUp Form, Footer 
+        - LogInSignUp Page : AllAuth
         - GetLLs Page      : Formed based page to take start location and end location from the user along with the Start Monitoring Button 
         - Map Page         : Here the results will be displayed
         
-    Total 3 Forms 
-        - Contact Us : On LandingPage 
-        - Login Form : On LogInSignUp Page 
+    Total 2 Forms 
+        - Contact Us : On LandingPage  
         - get_loc    : On GetLLs Page    
 '''
+
 
 start_lls = None
 end_lls = None
@@ -54,18 +54,6 @@ class LandingPage(FormView):
 
         return super().form_valid(form)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        start_lls = self.request.session.get('start_lls')
-        end_lls = self.request.session.get('end_lls')
-
-
-        context['start_lls'] = start_lls
-        context['end_lls'] = end_lls
-
-        return context
-
 
 
 
@@ -89,15 +77,11 @@ class GetLLs(FormView):
     success_url = 'menu'
 
     def form_valid(self, form):
+        global start_lls, end_lls
 
-        start = form.cleaned_data['start']
-        destination = form.cleaned_data['destination']
+        start_lls = form.cleaned_data['start']
+        end_lls = form.cleaned_data['destination']
 
-        start_lls = get_latitude_longitude(start)
-        end_lls = get_latitude_longitude(destination)
-
-        self.start_lls = start_lls
-        self.end_lls = end_lls
 
         return redirect('main:menu')
 
@@ -110,11 +94,11 @@ class Main(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        start_lls = self.request.session.get('start_lls')
-        end_lls = self.request.session.get('end_lls')
+        start = start_lls
+        end = end_lls
 
-        context['start_lls'] = [40.7128,-74.0060]
-        context['end_lls'] = [ 34.0522,-118.2437]
+        context['start_lls'] = start
+        context['end_lls'] = end
 
         return context
 
