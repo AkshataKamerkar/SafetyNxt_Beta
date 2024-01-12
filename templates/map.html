@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <!-- Add this style for Awesomplete (customize as needed) -->
     <style>
         .location-input-box {
@@ -41,42 +41,47 @@
     <div id="directions-box">
         <div id="directions-title">Driving Directions</div>
 
-        <div class="container">
-            <!-- Input fields for starting point and destination -->
+        <form id='locationForm' method="GET" action="{% url 'main:menu' %}">
+            {% csrf_token %}
+            <div class="container">
+                <!-- Input fields for starting point and destination -->
 
-            <div class="input-box">
-                <img class="icon-left" src="/static/img/start location.png" />
-                <div class="bg-bar"></div>
-                <img class="icon-right" src="/static/img/search.png" />
-                <input type="text" id="start" class="text-box" placeholder="Choose starting point" list="location-suggestions" />
-                <datalist id="location-suggestions"></datalist>
+                <div class="input-box">
+                    <img class="icon-left" src="/static/img/start location.png" />
+                    <div class="bg-bar"></div>
+                    <img class="icon-right" src="/static/img/search.png" />
+                    <input type="text" name='start_location' id="id_start_location" class="text-box" placeholder="Choose starting point" list="location-suggestions" />
+
+                    <datalist id="location-suggestions"></datalist>
+                </div>
+
+                <div class="destination-box">
+                    <img class="icon-left" src="/static/img/destination.png" />
+                    <div class="bg-bar"></div>
+                    <img class="icon-right" src="/static/img/search.png" />
+                    <input type="text" name="end_location" id="id_end_location" class="text-box" placeholder="Choose destination" list="location-suggestions" />
+
+                </div>
+
+                <!-- Rotate Icon -->
+                <img class="rotate-icon" src="/static/img/dot.png" />
+
+                <!-- Additional Icon -->
+                <img class="additional-icon" src="/static/img/switch.png" onclick="reverseInputs()"/>
+
+                <!-- Find Route Box -->
+                <div class="find-route-box">
+                    <div class="background-bar"></div>
+                    <!-- Button to trigger findRoute function -->
+
+                    <a href="{% url 'main:menu' %}">
+                        <button class="find-route-text">
+                            Start Monitoring
+                        </button>
+                    </a>
+                </div>
             </div>
-
-            <div class="destination-box">
-                <img class="icon-left" src="/static/img/destination.png" />
-                <div class="bg-bar"></div>
-                <img class="icon-right" src="/static/img/search.png" />
-                <input type="text" id="destination" class="text-box" placeholder="Choose destination" list="location-suggestions" />
-            </div>
-
-            <!-- Rotate Icon -->
-            <img class="rotate-icon" src="/static/img/dot.png" />
-
-            <!-- Additional Icon -->
-            <img class="additional-icon" src="/static/img/switch.png" onclick="reverseInputs()"/>
-
-            <!-- Find Route Box -->
-            <div class="find-route-box">
-                <div class="background-bar"></div>
-                <!-- Button to trigger findRoute function -->
-<!--                <a href="{% url 'main:map' %}">-->
-                <a href="/">
-                    <button class="find-route-text" onclick="findRoute()">
-                        Start Monitoring
-                    </button>
-                </a>
-            </div>
-        </div>
+        </form>
     </div>
 
     <a href="{% url 'account_logout' %}">
@@ -87,10 +92,16 @@
 
     <div class="folium-map" id="map_aa291a4f1eafe5bbd01101418f32837c"></div>
 
+
+
     <a href="/" class="logo"><img src="/static/img/logo.png" alt="">SafetyNXT</a>
 
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/static/js/map.js"></script>
     <script>
+
         // Example locations for Pune
         var puneLocations = ['Aundh, Pune', 'Koregaon Park, Pune', 'Magarpatta, Pune', 'Shivaji Nagar, Pune','Shaniwar Wada, Pune',
             'Aga Khan Palace, Pune',

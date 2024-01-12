@@ -1,14 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import TemplateView, FormView
 from django.views.generic.edit import FormView
 from django.http import JsonResponse, HttpResponseRedirect
 from django.views import View
-from .forms import ContactForm
+from .forms import ContactForm, RouteFrom
 from .models import Contact
 from .utils import send_email_to_client
 from django.contrib import messages
 from .functions import get_location, get_latitude_longitude
+
 
 '''
     Total 5 Routes 
@@ -55,7 +56,10 @@ class LandingPage(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        global start_lls, end_lls
+
+        start_lls = self.request.session.get('start_lls')
+        end_lls = self.request.session.get('end_lls')
+
 
         context['start_lls'] = start_lls
         context['end_lls'] = end_lls
@@ -76,39 +80,41 @@ class LogInSignUp(TemplateView):
 
     template_name = 'log.html'
 
-# After successful login user will be redirected to this page, we will get users location info from this page
-class GetLLs(TemplateView):
+
+
+class GetLLs(FormView):
 
     template_name = 'map.html'
+    form_class = RouteFrom
+    success_url = 'menu'
 
-    def post(self,request,*args,**kwargs):
+    def form_valid(self, form):
 
-        start = request.POST.get('start')
-        destination = request.POST.get('destination')
+        start = form.cleaned_data['start']
+        destination = form.cleaned_data['destination']
 
         start_lls = get_latitude_longitude(start)
         end_lls = get_latitude_longitude(destination)
 
-        request.session['start_lls'] = start_lls
-        request.session['end_lls'] = end_lls
+        self.start_lls = start_lls
+        self.end_lls = end_lls
 
-        return HttpResponseRedirect(reverse(LandingPage))
-
+        return redirect('main:menu')
 
 
 # Main Page
-class Main(GetLLs,TemplateView):
+class Main(TemplateView):
 
     template_name = 'menu.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        global start_lls, end_lls
 
         start_lls = self.request.session.get('start_lls')
         end_lls = self.request.session.get('end_lls')
 
-        context['start_lls'] = self.start_lls
-        context['end_lls'] = self.end_lls
+        context['start_lls'] = [40.7128,-74.0060]
+        context['end_lls'] = [ 34.0522,-118.2437]
 
         return context
+
