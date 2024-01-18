@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import TemplateView, FormView
@@ -14,7 +15,21 @@ from django.views.generic.edit import FormView
 from django.views.generic.base import TemplateView
 from django.http import HttpResponseRedirect
 from .forms import RouteFrom
-
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render, redirect
+from django.views.generic import FormView, TemplateView
+from geopy import Nominatim
+import logging
+from django.http import JsonResponse, HttpResponseRedirect, request
+from django.views import View
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from django.views import View
+import json
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.views import View
 
 '''
     Total 5 Routes 
@@ -105,3 +120,31 @@ class Main(TemplateView):
         context['end_lls'] = end
 
         return context
+
+@method_decorator(csrf_exempt, name='dispatch')
+class Map(TemplateView):
+    template_name = 'menu.html'
+
+
+@csrf_exempt
+def get_coordinates(request):
+    if request.method == 'POST':
+        try:
+            # Parse JSON data from the request body
+            data = json.loads(request.body.decode('utf-8'))
+
+            # Access the data directly
+            from_lat = data.get('fromLat')
+            from_lon = data.get('fromLon')
+            to_lat = data.get('toLat')
+            to_lon = data.get('toLon')
+
+            print(f"From Lat: {from_lat}, From Lon: {from_lon}")
+            print(f"To Lat: {to_lat}, To Lon: {to_lon}")
+
+            return JsonResponse({'status':'success'})
+
+        except json.JSONDecodeError as e:
+            return JsonResponse({'status': 'error', 'message': f'Invalid JSON format: {str(e)}'})
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid Request Method'})
