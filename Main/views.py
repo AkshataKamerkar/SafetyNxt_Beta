@@ -9,6 +9,11 @@ from .models import Contact
 from .utils import send_email_to_client
 from django.contrib import messages
 from .functions import get_location, get_latitude_longitude
+from django.shortcuts import redirect
+from django.views.generic.edit import FormView
+from django.views.generic.base import TemplateView
+from django.http import HttpResponseRedirect
+from .forms import RouteFrom
 
 
 '''
@@ -24,9 +29,6 @@ from .functions import get_location, get_latitude_longitude
         - get_loc    : On GetLLs Page    
 '''
 
-
-start_lls = None
-end_lls = None
 
 class LandingPage(FormView):
     template_name = 'landingPage.html'
@@ -69,36 +71,37 @@ class LogInSignUp(TemplateView):
     template_name = 'log.html'
 
 
-
 class GetLLs(FormView):
-
     template_name = 'map.html'
     form_class = RouteFrom
     success_url = 'menu'
 
     def form_valid(self, form):
-        global start_lls, end_lls
+        # Retrieve the form data
+        start_location = form.cleaned_data['start_location']
+        destination = form.cleaned_data['destination']
 
-        start_lls = form.cleaned_data['start']
-        end_lls = form.cleaned_data['destination']
+        # Print statements for debugging
+        print("Start Location:", start_location)
+        print("Destination:", destination)
 
+        # Set values in session
+        self.request.session['start_lls'] = start_location
+        self.request.session['end_lls'] = destination
 
-        return redirect('main:menu')
+        return HttpResponseRedirect(self.get_success_url())
 
-
-# Main Page
 class Main(TemplateView):
-
     template_name = 'menu.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        start = start_lls
-        end = end_lls
+        # Retrieve values from session
+        start = self.request.session.get('start_lls')
+        end = self.request.session.get('end_lls')
 
         context['start_lls'] = start
         context['end_lls'] = end
 
         return context
-

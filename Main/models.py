@@ -21,4 +21,10 @@ class Contact(models.Model):
         return f"{self.fname} {self.lname} {self.msg}"
 
 
+class Route(models.Model):
+    start = models.CharField(max_length=100)
+    destination = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f" Start : {self.start} End : {self.destination}"
 
