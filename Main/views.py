@@ -80,32 +80,6 @@ class AboutUs(TemplateView):
 
     template_name = 'about.html'
 
-# FormView coz here we have to take new users info and register it in our db as well as retrive and confirm the info of existing user
-class LogInSignUp(TemplateView):
-
-    template_name = 'log.html'
-
-
-class GetLLs(FormView):
-    template_name = 'map.html'
-    form_class = RouteFrom
-    success_url = 'menu'
-
-    def form_valid(self, form):
-        # Retrieve the form data
-        start_location = form.cleaned_data['start_location']
-        destination = form.cleaned_data['destination']
-
-        # Print statements for debugging
-        print("Start Location:", start_location)
-        print("Destination:", destination)
-
-        # Set values in session
-        self.request.session['start_lls'] = start_location
-        self.request.session['end_lls'] = destination
-
-        return HttpResponseRedirect(self.get_success_url())
-
 class Main(TemplateView):
     template_name = 'menu.html'
 
