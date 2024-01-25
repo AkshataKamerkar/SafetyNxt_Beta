@@ -80,20 +80,7 @@ class AboutUs(TemplateView):
 
     template_name = 'about.html'
 
-class Main(TemplateView):
-    template_name = 'menu.html'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #
-    #     # Retrieve values from session
-    #     start = self.request.session.get('start_lls')
-    #     end = self.request.session.get('end_lls')
-    #
-    #     context['start_lls'] = start
-    #     context['end_lls'] = end
-    #
-    #     return context
 
 @method_decorator(csrf_exempt, name='dispatch')
 class Map(TemplateView):
