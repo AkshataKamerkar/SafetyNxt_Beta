@@ -22,12 +22,13 @@
 
     <div>
         <label for="from">From Location</label>
-        <input type="text" id="from">
+        <input type="text" id="from" list="location-suggestions">
+        <datalist id="location-suggestions"></datalist>
     </div>
 
     <div>
         <label for="to">Destination Location</label>
-        <input type="text" id="to">
+        <input type="text" id="to" list="location-suggestions">
     </div>
 
     <button onclick="getRoute()">Start Monitoring</button>
@@ -122,6 +123,40 @@
                 });
             });
         }
+
+ // Code for the AutoComplete Location Feature
+        // Example locations for Pune
+        var puneLocations = ['Aundh, Pune', 'Koregaon Park, Pune', 'Magarpatta, Pune', 'Shivaji Nagar, Pune','Shaniwar Wada, Pune',
+            'Aga Khan Palace, Pune',
+            'Sinhagad Fort, Pune',
+            'Osho Ashram, Pune',
+            'Dagadusheth Halwai Ganpati Temple, Pune',
+            'Raja Dinkar Kelkar Museum, Pune',
+            'Lal Mahal, Pune',
+            'Khadakwasla Dam, Pune',
+            'Pataleshwar Cave Temple, Pune',
+            'Parvati Hill, Pune',
+            'Bund Garden, Pune',
+            'Vetal Tekdi, Pune',
+            'Pu La Deshpande Garden, Pune',
+            'Mulshi Lake and Dam, Pune',
+            'Phoenix Marketcity, Pune',
+            'FC Road (Fergusson College Road), Pune',
+            'Koregaon Park, Pune',
+            'Saras Baug, Pune',
+            'Darshan Museum, Pune',
+            'Rajiv Gandhi Zoological Park, Pune'];
+
+        // Populate datalist with suggestions
+        puneLocations.forEach(function (location) {
+            var option = document.createElement('option');
+            option.value = location;
+            document.getElementById('location-suggestions').appendChild(option.cloneNode(true));
+        });
+
+        // Initialize Awesomplete for input fields
+        var startInput = new Awesomplete(document.getElementById('from'), { list: "#location-suggestions" });
+        var destinationInput = new Awesomplete(document.getElementById('to'), { list: "#location-suggestions" });
     </script>
 </body>
 
