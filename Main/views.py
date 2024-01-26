@@ -45,6 +45,43 @@ import pandas as pd
 '''
 
 
+
+def get_cctvs_info(from_lat_float,from_lon_float,to_lat_float,to_lon_float):
+    '''
+
+    :param from_lat_float: Floating point latitude of start location
+    :param from_lon_float: Floating point longitude of start location
+    :param to_lat_float: Floating point lotitude of end location
+    :param to_lon_float: Floating point longitude of end location
+    :return: The list of CCTV's (including Id's) that are present in the shortest path bw start and end location
+    '''
+    print(from_lat_float,from_lon_float)
+    print(to_lon_float,to_lat_float)
+
+    G = ox.graph_from_point((from_lat_float, from_lon_float), dist=5000, network_type='all')
+
+    start_node = ox.distance.nearest_nodes(G, from_lon_float, from_lat_float)
+    end_node = ox.distance.nearest_nodes(G, to_lon_float, to_lat_float)
+
+    route = nx.shortest_path(G, start_node, end_node, weight='lenght')
+
+    route_coordinates = [(G.nodes[node]['y'], G.nodes[node]['x']) for node in route]
+
+    print(route_coordinates)
+
+    cctv_data = pd.read_csv('Database/CcTV.csv')
+
+    # Filter the DataFrame based on common coordinates
+    common_coordinates_df = cctv_data[
+        cctv_data.apply(lambda row: (row['Latitude'], row['Longitude']) in route_coordinates, axis=1)]
+
+    # Display the matching coordinates
+    matching_coordinates_with_cam_id = common_coordinates_df['Cam_Id'].values
+
+
+    return matching_coordinates_with_cam_id
+
+
 class LandingPage(FormView):
     template_name = 'landingPage.html'
     form_class = ContactForm
@@ -114,27 +151,11 @@ def get_coordinates(request):
             print(f"To Lat: {to_lat}, To Lon: {to_lon}")
             print(f"Start : {start_point}, End :{end_point}")
 
-            G = ox.graph_from_point((from_lat_float,from_lon_float), dist=5000, network_type='all')
+            # Fetching CCTV Id's
+            cctv_info = get_cctvs_info(from_lat_float, from_lon_float, to_lat_float, to_lon_float)
 
-            start_node = ox.distance.nearest_nodes(G, from_lon_float, from_lat_float)
-            end_node = ox.distance.nearest_nodes(G, to_lon_float, to_lat_float)
+            print(cctv_info)
 
-            route = nx.shortest_path(G, start_node, end_node, weight='lenght')
-
-            route_coordinates = [(G.nodes[node]['y'], G.nodes[node]['x']) for node in route]
-
-            print(route_coordinates)
-
-            cctv_data = pd.read_csv('Database/CcTV.csv')
-
-            # Filter the DataFrame based on common coordinates
-            common_coordinates_df = cctv_data[cctv_data.apply(lambda row: (row['Latitude'], row['Longitude']) in route_coordinates, axis=1)]
-
-            # Display the matching coordinates
-            matching_coordinates = common_coordinates_df[['Latitude', 'Longitude']].values
-            print("Matching Coordinates:")
-            for coord in matching_coordinates:
-                print(tuple(coord))
 
             return JsonResponse({'status':'success'})
 
