@@ -98,6 +98,14 @@
                 var toLon = response.data[0].lon;
                 toMarker = L.marker([toLat, toLon]).addTo(map);
 
+                var routeCoordinates = {
+                    fromLat: fromLat,
+                    fromLon: fromLon,
+                    toLat: toLat,
+                    toLon: toLon,
+                    waypoints: []
+                };
+
                 routeControl = L.Routing.control({
                     waypoints: [
                         L.latLng(fromLat, fromLon),
@@ -106,14 +114,12 @@
                     router: L.Routing.osrmv1({
                         serviceUrl: "https://router.project-osrm.org/route/v1"
                     })
+                }).on('routeselected', function (e) {
+                    var waypoints = e.route.coordinates.map(function (coord) {
+                        return { lat: coord[0], lon: coord[1] };
+                    });
+                    routeCoordinates.waypoints = waypoints;
                 }).addTo(map);
-
-                var routeCoordinates = {
-                    fromLat: fromLat,
-                    fromLon: fromLon,
-                    toLat: toLat,
-                    toLon: toLon
-                };
 
                 axios.post("coordinates/", routeCoordinates).then(function (response) {
                     console.log(response.data);
@@ -124,9 +130,9 @@
             });
         }
 
- // Code for the AutoComplete Location Feature
+        // Code for the AutoComplete Location Feature
         // Example locations for Pune
-        var puneLocations = ['Aundh, Pune', 'Koregaon Park, Pune', 'Magarpatta, Pune', 'Shivaji Nagar, Pune','Shaniwar Wada, Pune',
+        var puneLocations = ['Aundh, Pune', 'Koregaon Park, Pune', 'Magarpatta, Pune', 'Shivaji Nagar, Pune', 'Shaniwar Wada, Pune',
             'Aga Khan Palace, Pune',
             'Sinhagad Fort, Pune',
             'Osho Ashram, Pune',

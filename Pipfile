@@ -8,6 +8,10 @@ django = "*"
 django-allauth = "==0.44.0"
 geocoder = "*"
 geopy = "*"
+osmnx = "*"
+networkx = "*"
+scikit-learn = "*"
+matplotlib = "*"
 
 [dev-packages]
 

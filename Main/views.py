@@ -25,11 +25,11 @@ from django.http import JsonResponse, HttpResponseRedirect, request
 from django.views import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views import View
 import json
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.views import View
+import osmnx as ox
+import networkx as nx
+
+
 
 '''
     Total 5 Routes 
@@ -87,6 +87,7 @@ class Map(TemplateView):
     template_name = 'menu.html'
 
 
+
 @csrf_exempt
 def get_coordinates(request):
     if request.method == 'POST':
@@ -100,8 +101,29 @@ def get_coordinates(request):
             to_lat = data.get('toLat')
             to_lon = data.get('toLon')
 
+            from_lat_float = float(from_lat)
+            from_lon_float = float(from_lon)
+            to_lat_float = float(to_lat)
+            to_lon_float = float(to_lon)
+
+            start_point = (from_lat_float,from_lon_float)
+            end_point = (to_lat_float,to_lon_float)
+
+
             print(f"From Lat: {from_lat}, From Lon: {from_lon}")
             print(f"To Lat: {to_lat}, To Lon: {to_lon}")
+            print(f"Start : {start_point}, End :{end_point}")
+
+            G = ox.graph_from_point((from_lat_float,from_lon_float), dist=5000, network_type='all')
+
+            start_node = ox.distance.nearest_nodes(G, from_lon_float, from_lat_float)
+            end_node = ox.distance.nearest_nodes(G, to_lon_float, to_lat_float)
+
+            route = nx.shortest_path(G, start_node, end_node, weight='lenght')
+
+            route_coordinates = [(G.nodes[node]['y'], G.nodes[node]['x']) for node in route]
+
+            print(route_coordinates)
 
             return JsonResponse({'status':'success'})
 
