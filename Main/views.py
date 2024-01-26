@@ -55,8 +55,7 @@ def get_cctvs_info(from_lat_float,from_lon_float,to_lat_float,to_lon_float):
     :param to_lon_float: Floating point longitude of end location
     :return: The list of CCTV's (including Id's) that are present in the shortest path bw start and end location
     '''
-    print(from_lat_float,from_lon_float)
-    print(to_lon_float,to_lat_float)
+
 
     G = ox.graph_from_point((from_lat_float, from_lon_float), dist=5000, network_type='all')
 
@@ -143,13 +142,8 @@ def get_coordinates(request):
             to_lat_float = float(to_lat)
             to_lon_float = float(to_lon)
 
-            start_point = (from_lat_float,from_lon_float)
-            end_point = (to_lat_float,to_lon_float)
-
-
             print(f"From Lat: {from_lat}, From Lon: {from_lon}")
             print(f"To Lat: {to_lat}, To Lon: {to_lon}")
-            print(f"Start : {start_point}, End :{end_point}")
 
             # Fetching CCTV Id's
             cctv_info = get_cctvs_info(from_lat_float, from_lon_float, to_lat_float, to_lon_float)
