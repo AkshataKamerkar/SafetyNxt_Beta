@@ -28,7 +28,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import osmnx as ox
 import networkx as nx
-
+import pandas as pd
 
 
 '''
@@ -124,6 +124,17 @@ def get_coordinates(request):
             route_coordinates = [(G.nodes[node]['y'], G.nodes[node]['x']) for node in route]
 
             print(route_coordinates)
+
+            cctv_data = pd.read_csv('Database/CcTV.csv')
+
+            # Filter the DataFrame based on common coordinates
+            common_coordinates_df = cctv_data[cctv_data.apply(lambda row: (row['Latitude'], row['Longitude']) in route_coordinates, axis=1)]
+
+            # Display the matching coordinates
+            matching_coordinates = common_coordinates_df[['Latitude', 'Longitude']].values
+            print("Matching Coordinates:")
+            for coord in matching_coordinates:
+                print(tuple(coord))
 
             return JsonResponse({'status':'success'})
 
