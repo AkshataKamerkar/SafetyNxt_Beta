@@ -6,67 +6,32 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-contextmenu@latest/dist/leaflet.contextmenu.min.css" />
-    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
 
+    <style>
+        #map {
+            height: 800px;
+        }
+    </style>
 
 </head>
 
 <body>
 
+    <div class="directions-label">Directions</div>
 
-    <div id="directions-box">
-      <div id="directions-title">Driving Directions</div>
-
-      <div class="container">
-        <!-- Input fields for starting point and destination -->
-        <div class="input-box">
-          <img class="icon-left" src="/static/img/start location.png" />
-          <div class="bg-bar"></div>
-          <img class="icon-right" src="/static/img/search.png" />
-          <input
-            type="text"
-            id="from"
-            class="text-box"
-            list="location-suggestions"
-            placeholder="Choose starting point"
-          />
-          <datalist id="location-suggestions"></datalist>
-        </div>
-
-        <div class="destination-box">
-          <img class="icon-left" src="/static/img/destination.png" />
-          <div class="bg-bar"></div>
-          <img class="icon-right" src="/static/img/search.png" />
-          <input
-            type="text"
-            id="to"
-            list="location-suggestions"
-            class="text-box"
-            placeholder="Choose destination"
-          />
-        </div>
-
-        <!-- Rotate Icon -->
-        <img class="rotate-icon" src="/static/img/dot.png" />
-
-        <!-- Additional Icon -->
-        <img
-          class="additional-icon"
-          src="/static/img/switch.png"
-          onclick="reverseInputs()"
-        />
-
-        <!-- Find Route Box -->
-        <div class="find-route-box">
-          <div class="background-bar"></div>
-          <!-- Button to trigger findRoute function -->
-            <button class="find-route-text" onclick="getRoute()">
-              Start Monitoring
-            </button>
-        </div>
-      </div>
+    <div>
+        <label for="from">From Location</label>
+        <input type="text" id="from" list="location-suggestions">
+        <datalist id="location-suggestions"></datalist>
     </div>
 
+    <div>
+        <label for="to">Destination Location</label>
+        <input type="text" id="to" list="location-suggestions">
+    </div>
+
+    <button onclick="getRoute()">Start Monitoring</button>
     <div id="map"></div>
 
     <div id="steps"></div>
@@ -165,18 +130,6 @@
             });
         }
 
-        // Reverse code
-        function reverseInputs() {
-            // Get the values from the starting and destination input boxes
-            var startInput = document.getElementById("from");
-            var destinationInput = document.getElementById("to");
-
-            // Swap the values
-            var temp = startInput.value;
-            startInput.value = destinationInput.value;
-            destinationInput.value = temp;
-        }
-
         // Code for the AutoComplete Location Feature
         // Example locations for Pune
         var puneLocations = ['Aundh, Pune', 'Koregaon Park, Pune', 'Magarpatta, Pune', 'Shivaji Nagar, Pune', 'Shaniwar Wada, Pune',
@@ -211,8 +164,6 @@
         var startInput = new Awesomplete(document.getElementById('from'), { list: "#location-suggestions" });
         var destinationInput = new Awesomplete(document.getElementById('to'), { list: "#location-suggestions" });
     </script>
-
-    <script src="map.js"></script>
 </body>
 
 </html>
