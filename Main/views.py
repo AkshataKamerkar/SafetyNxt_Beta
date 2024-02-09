@@ -81,6 +81,7 @@ def get_cctvs_info(from_lat_float,from_lon_float,to_lat_float,to_lon_float):
     return matching_coordinates_with_cam_id
 
 
+
 class LandingPage(FormView):
     template_name = 'landingPage.html'
     form_class = ContactForm
@@ -145,10 +146,11 @@ def get_coordinates(request):
             print(f"From Lat: {from_lat}, From Lon: {from_lon}")
             print(f"To Lat: {to_lat}, To Lon: {to_lon}")
 
-            # Fetching CCTV Id's
-            cctv_info = get_cctvs_info(from_lat_float, from_lon_float, to_lat_float, to_lon_float)
+            # Fetching the Matched CCTV's from the DataBase
+            cctv_info_map = get_cctvs_info(from_lat_float, from_lon_float, to_lat_float, to_lon_float)
 
-            print(cctv_info)
+            print(cctv_info_map)
+
 
 
             return JsonResponse({'status':'success'})
