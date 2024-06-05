@@ -1,5 +1,18 @@
 
 
+// switch
+
+function reverseInputs() {
+    // Get the values from the starting and destination input boxes
+    var startInput = document.getElementById("from");
+    var destinationInput = document.getElementById("to");
+
+    // Swap the values
+    var temp = startInput.value;
+    startInput.value = destinationInput.value;
+    destinationInput.value = temp;
+}
+
 var map = L.map("map").setView([18.5285, 73.8744], 13);
 
 mapLink = "<a href='http://openstreetmap.org'>OpenStreetMap</a>";
@@ -86,19 +99,6 @@ function getRoute() {
     });
 }
 
-
-
-function reverseInputs() {
-    // Get the values from the starting and destination input boxes
-    var startInput = document.getElementById("from");
-    var destinationInput = document.getElementById("to");
-
-    // Swap the values
-    var temp = startInput.value;
-    startInput.value = destinationInput.value;
-    destinationInput.value = temp;
-}
-
 // Code for the AutoComplete Location Feature
 // Example locations for Pune
 var puneLocations = ['Aundh, Pune', 'Koregaon Park, Pune', 'Magarpatta, Pune', 'Shivaji Nagar, Pune', 'Shaniwar Wada, Pune',
@@ -134,11 +134,13 @@ var startInput = new Awesomplete(document.getElementById('from'), { list: "#loca
 var destinationInput = new Awesomplete(document.getElementById('to'), { list: "#location-suggestions" });
 
 
-// Logout
-function logout() {
-  // You can implement logout logic here
-  // For example, redirect to a logout route or perform an API call
 
-  // For demonstration purposes, let's just alert a message
-  alert('Logout clicked! Implement your logout logic here.');
-}
+
+
+
+
+
+//   map
+
+L_NO_TOUCH = false;
+L_DISABLE_3D = false;

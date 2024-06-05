@@ -1,0 +1,466 @@
+@import url("https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700;800&family=Marck+Script&family=Poppins:wght@500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Marck+Script&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700;800&family=Aladin&family=Marck+Script&family=Poppins:wght@500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700;800&family=Aclonica&family=Aladin&family=Marck+Script&family=Poppins:wght@500;600;700&display=swap");
+
+:root {
+  --main-color: #2288ff;
+  --second-color: #192f6a;
+  --text-color: #314862;
+  --bg-color: #fff;
+  --bg2-color: #000;
+
+  /* Box Shadow */
+  --box-shadow: 2px 2px 18px rgb(14 52 54 / 15%);
+}
+
+/* element */
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#directions-box {
+  position: absolute;
+  top: 7px;
+  left: 45.5px;
+  width: 347.25px;
+  height: 195px;
+  z-index: 1000;
+  background-color: white;
+  padding: 7.5px;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: "Aladin";
+  font-size: 12px;
+  color: #2c71f6;
+  display: flex;
+  flex-direction: column;
+}
+
+#directions-title {
+  font-size: 18.75px;
+  color: #2c71f6;
+  margin-bottom: 11.25px;
+  top: 11.25px;
+  text-align: center;
+  font-family: "Aclonica";
+}
+
+.container {
+  width: calc(337.5px - 37.5px);
+  height: calc(187.5px - 37.5px);
+  position: relative;
+}
+
+.input-box {
+  width: 363.5475px;
+  height: 49.5575px;
+  left: 0px;
+  top: 0px;
+  position: absolute;
+}
+
+.input-box .icon-left,
+.input-box .icon-right {
+  width: 41.145px;
+  height: 43.725px;
+  position: absolute;
+}
+
+.input-box .icon-left {
+  left: 0px;
+  top: 0px;
+}
+
+.input-box .icon-right {
+  left: 270.195px;
+  top: -0.375px;
+}
+
+.input-box .bg-bar {
+  width: calc(307.7025px - 37.5px);
+  height: 42px;
+  left: 43.5px;
+  top: 0px;
+  position: absolute;
+  background: #d9d9d9;
+  border-radius: 15px;
+}
+
+.input-box .text-box {
+  width: 246px;
+  height: 19.1175px;
+  left: 48.375px;
+  top: 3px;
+  position: absolute;
+  color: rgba(51, 51, 51, 1);
+  font-size: 15px;
+  font-family: "poppins";
+  font-weight: 100;
+  word-wrap: break-word;
+}
+
+.destination-box {
+  width: 363.5475px;
+  height: 49.5575px;
+  left: 0px;
+  top: 74.25px;
+  position: absolute;
+}
+
+.destination-box .bg-bar {
+  width: calc(307.7025px - 37.5px);
+  height: 42px;
+  left: 43.5px;
+  top: -6px;
+  position: absolute;
+  background: #d9d9d9;
+  border-radius: 15px;
+}
+
+.destination-box .icon-left,
+.destination-box .icon-right {
+  width: 41.145px;
+  height: 43.725px;
+  position: absolute;
+}
+
+.destination-box .icon-left {
+  left: 0px;
+  top: -3.75px;
+}
+
+.destination-box .icon-right {
+  left: 270.195px;
+  top: -6.375px;
+}
+
+.destination-box .text-box {
+  width: 246px;
+  height: 19.1175px;
+  left: 48.375px;
+  top: -1.125px;
+  position: absolute;
+  color: rgba(51, 51, 51, 1);
+  font-size: 15px;
+  font-family: "poppins";
+  font-weight: 100;
+  word-wrap: break-word;
+}
+
+.rotate-icon {
+  width: 25.23px;
+  height: 23.8425px;
+  left: 8.1px;
+  top: 70.5px;
+  position: absolute;
+  transform: rotate(-90deg);
+  transform-origin: 0 0;
+}
+
+.additional-icon {
+  width: 37.5px;
+  height: 39px;
+  left: 307.5px;
+  top: 36.15px;
+  position: absolute;
+  transform: rotate(-90deg);
+}
+
+.find-route-box {
+  width: 394.845px;
+  height: 45px;
+  left: 5.9025px;
+  top: 151.455px;
+  position: relative;
+}
+
+.find-route-box .background-bar {
+  width: 345px;
+  height: 37.5px;
+  left: -3.75px;
+  top: -30px;
+  position: absolute;
+  background: rgba(44, 113, 246, 0.71);
+  border-radius: 15px;
+}
+
+.find-route-box .find-route-text {
+  width: 225px;
+  height: 38.115px;
+  left: 56.5px;
+  top: -31.5px;
+  position: absolute;
+  color: white;
+  font-size: 22.5px;
+  font-family: "Aladin";
+  font-weight: 200;
+  word-wrap: break-word;
+}
+
+.find-route-box .background-bar:hover {
+  background: #1a4fa5;
+}
+
+input.text-box,
+button.find-route-text {
+  border: none;
+  outline: none;
+  padding: 7.5px;
+  width: 75%;
+  font-size: 12px;
+  border-radius: 3.75px;
+  background-color: transparent;
+  transition: black 0.225s ease;
+}
+
+button.find-route-text {
+  color: #2c71f6;
+  cursor: pointer;
+  transition: color 0.225s ease;
+}
+
+button.find-route-text:hover {
+  color: #333;
+}
+
+#logout-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 1003;
+  border: none;
+  cursor: pointer;
+  padding: 8px 18px;
+  background: var(--main-color);
+  color: var(--bg-color);
+  border-radius: 8rem;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: "Aclonica";
+}
+
+#logout-btn:hover {
+  background-color: #1a4fa5;
+}
+
+.logo {
+  position: fixed;
+  bottom: 4px; /* Reduced distance */
+  right: 2px; /* Reduced distance */
+  margin: 5px;
+  text-decoration: none;
+  z-index: 1002;
+  display: flex;
+  align-items: center;
+  column-gap: 0.05rem;
+  font-family: "Marck Script";
+  font-size: 30px;
+  font-weight: 600;
+  color: #2c71f6;
+  text-transform: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added shadow effect */
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+}
+
+/* services */
+.slide {
+  height: 195px;
+  width: 345px;
+  top: 224px;
+  left: 45px;
+  position: absolute;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: 0.5s ease;
+  transform: translateX(-500px);
+  z-index: 1002;
+}
+
+.header {
+  width: 300px;
+  height: 50px;
+  left: 25px;
+  top: 5px;
+  position: absolute;
+}
+
+.title {
+  width: 250px;
+  height: 32px;
+  left: 75px;
+  pointer-events: none;
+  display: block;
+  font-weight: 200;
+  margin-top: 5px;
+  margin-left: 0;
+  margin-right: 0;
+  position: absolute;
+  word-wrap: break-word;
+  font-size: 22px;
+  color: #2c71f6;
+  margin-bottom: 10px;
+  top: 4px;
+  font-family: "Aclonica";
+}
+
+.icon1 {
+  width: 40px;
+  height: 35px;
+  left: 30px;
+  top: 4px;
+  position: absolute;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  left: 30px;
+  top: -5px;
+  position: absolute;
+}
+
+.service-block {
+  width: 395px;
+  height: 61px;
+  left: -35px;
+  top: 34px;
+  margin-bottom: -5px;
+  position: relative;
+}
+
+ul li {
+  list-style: none;
+}
+
+ul li .service-title {
+  width: 312px;
+  height: 39px;
+  top: -3.5px;
+  position: absolute;
+  font-family: "poppins";
+  word-wrap: break-word;
+  color: #333;
+  font-weight: 500;
+  padding: 2px 0;
+  left: 70px;
+  font-size: 18px;
+  display: block;
+  text-transform: capitalize;
+  text-decoration: none;
+  transition: 0.2s ease-out;
+}
+
+ul li:hover .service-title {
+  color: #1a4fa5;
+}
+
+ul li a i {
+  width: 40px;
+  text-align: center;
+}
+
+input[type="checkbox"] {
+  display: none;
+  visibility: hidden;
+  appearance: none;
+}
+
+.toggle {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  top: 230px;
+  left: 53px;
+  z-index: 1003;
+  cursor: pointer;
+  border-radius: 2px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.toggle .common {
+  position: absolute;
+  height: 2px;
+  width: 20px;
+  background-color: #1a4fa5;
+  border-radius: 50px;
+  transition: 0.3s ease;
+}
+
+.toggle .top_line {
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.toggle .middle_line {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.toggle .bottom_line {
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+input:checked ~ .toggle .top_line {
+  left: 2px;
+  top: 14px;
+  width: 25px;
+  transform: rotate(45deg);
+}
+
+input:checked ~ .toggle .bottom_line {
+  left: 2px;
+  top: 14px;
+  width: 25px;
+  transform: rotate(-45deg);
+}
+
+input:checked ~ .toggle .middle_line {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+input:checked ~ .slide {
+  transform: translateX(0);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.toggle_box {
+  width: 65px;
+  height: 32px;
+  display: block;
+  background-color: #2c71f6;
+  border-radius: 100px;
+  cursor: pointer;
+  position: relative;
+  transition: 0.5s;
+  left: 272px;
+  top: -5px;
+}
+
+.circle {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  left: 0px;
+  background-color: #000;
+  border-radius: 1000px;
+  margin: 5px;
+  transition: 0.5s;
+}
