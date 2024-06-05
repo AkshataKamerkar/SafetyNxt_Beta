@@ -32,6 +32,8 @@ import osmnx as ox
 import networkx as nx
 import pandas as pd
 from ultralytics import YOLO
+import threading
+from queue import Queue
 
 
 '''
@@ -53,19 +55,25 @@ from ultralytics import YOLO
 
 
 
-def potholes(cctv_info_map):
+def potholes(cctv_id,result_queue):
     '''
 
     :param cctv_info_map: List of the mapped CCTV Id's
-    :return: If the pothole is detected or not
+    :param result_queue: Queue to store the results
+    :return: Number of detected Potholes
+    :working: Input of all the CCTV Id will be given to the function, monitoring will be performed on that cctv and number of potholes
+              detected will be calculated and the dict of potholes_coordinates along with the number of potholes will be detected
+
     '''
 
 
     # Loading the Deep Learning Model
     model = YOLO("Models/Potholes_60.pt")
 
-    # TODO: Implement threading for monitoring different CCTV ID's simultaneously
-    cap = cv2.VideoCapture(cctv_info_map)
+    # For demo purpose
+    cctv_info_map = 'static/Videos/Potholes/Potholes.mp4'
+    cap = cv2.VideoCapture(cctv_id)
+    pothole_details = {}
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -73,7 +81,7 @@ def potholes(cctv_info_map):
             break
 
         # Run batched inference on a list of images
-        results = model(cctv_info_map)  # return a list of Results objects
+        results = model(frame)  # return a list of Results objects
 
         # Process results list
         for result in results:
@@ -82,8 +90,15 @@ def potholes(cctv_info_map):
             keypoints = result.keypoints  # Keypoints object for pose outputs
             probs = result.probs  # Probs object for classification outputs
 
-            print("Probabilities")
-            print(probs)
+            # Calculating the number of detected potholes
+            if boxes is not None and probs is not None:
+                for box, prob in zip(boxes, probs):
+                    if prob > 0.65:  # Assuming threshold for pothole detection
+                        x1, y1, x2, y2 = map(int, box.xyxy[0])
+                        coord = (x1, y1, x2, y2)
+                        if coord in pothole_details:
+                            pothole_details[coord] += 1
+
 
         # Display the frame
         cv2.imshow('Object Detection', frame)
@@ -95,6 +110,12 @@ def potholes(cctv_info_map):
 
 
 
+
+
+
+
+
+
 def get_cctvs_info(from_lat_float,from_lon_float,to_lat_float,to_lon_float):
     '''
 
@@ -103,6 +124,10 @@ def get_cctvs_info(from_lat_float,from_lon_float,to_lat_float,to_lon_float):
     :param to_lat_float: Floating point lotitude of end location
     :param to_lon_float: Floating point longitude of end location
     :return: The list of CCTV's (including Id's) that are present in the shortest path bw start and end location
+    :working: Input of Source and Destination Coordinates entered by the user will be given to the function, shortest distance bw the
+              Source and Destination will be calculated and the Coordinates of the shortest distance will be matched with the CCTV
+              Coordinates Database and matching Coordinates will be returned
+
     '''
 
 
@@ -205,9 +230,21 @@ def get_coordinates(request):
 
             print(cctv_info_map)
 
+            ''' 
+            detected_list = [
+                                {Pothole Coordinate : Number, Pothole Coordinate : Number,..},
+                                {Traffic Coordinate : Number, Traffic Coordinate : Number,...},
+                                [ Accident Coordinate, Accident Coordinate,...]
+                            ]
+            '''
 
-            # Potholes Model
-            detected_potholes = potholes("static/Videos/Potholes/Potholes.mp4")
+            detected_list = {}
+
+            # TODO: APPLY THREADING TO MONITOR ALL THE CCTV ID'S
+            # Potholes Detection
+            # Traffic Detection
+            # Accident Detection
+
 
 
 
