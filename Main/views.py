@@ -44,7 +44,11 @@ from ultralytics import YOLO
         
     Total 2 Forms 
         - Contact Us : On LandingPage  
-        - get_loc    : On GetLLs Page    
+        - get_loc    : On GetLLs Page  
+        
+        
+    Can Implement 
+        - Dashboard ( new page ) containing the info of all the previous accidents [ Location, time ]   
 '''
 
 
