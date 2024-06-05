@@ -2,168 +2,161 @@
 <html>
 
 <head>
-    <title>Geolocation</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-contextmenu@latest/dist/leaflet.contextmenu.min.css" />
-    <link rel="stylesheet" href="/static/css/styles.css">
+  <title>Geolocation</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-contextmenu@latest/dist/leaflet.contextmenu.min.css" />
+  <link rel="stylesheet" href="static/css/menu.css">
 
-    <style>
-        #map {
-            height: 800px;
-        }
-    </style>
+  <style>
+    #map {
+      height: 800px;
+    }
+  </style>
 
 </head>
 
 <body>
 
-    <div class="directions-label">Directions</div>
 
-    <div>
-        <label for="from">From Location</label>
-        <input type="text" id="from" list="location-suggestions">
+  <div id="directions-box">
+    <div id="directions-title">Driving Directions</div>
+
+    <div class="container">
+      <!-- Input fields for starting point and destination -->
+      <div class="input-box">
+        <img class="icon-left" src="static/img/start location.png" />
+        <div class="bg-bar"></div>
+        <img class="icon-right" src="static/img/search.png" />
+        <input type="text" id="from" class="text-box" list="location-suggestions" placeholder="Choose starting point" />
         <datalist id="location-suggestions"></datalist>
+      </div>
+
+      <div class="destination-box">
+        <img class="icon-left" src="static/img/destination.png" />
+        <div class="bg-bar"></div>
+        <img class="icon-right" src="static/img/search.png" />
+        <input type="text" id="to" list="location-suggestions" class="text-box" placeholder="Choose destination" />
+      </div>
+
+      <!-- Rotate Icon -->
+      <img class="rotate-icon" src="static/img/dot.png" />
+
+      <!-- Additional Icon -->
+      <img class="additional-icon" src="static/img/switch.png" onclick="reverseInputs()" />
+
+      <!-- Find Route Box -->
+      <div class="find-route-box">
+        <div class="background-bar"></div>
+        <!-- Button to trigger findRoute function -->
+        <button class="find-route-text" onclick="getRoute()">
+          Start Monitoring
+        </button>
+      </div>
     </div>
+  </div>
 
-    <div>
-        <label for="to">Destination Location</label>
-        <input type="text" id="to" list="location-suggestions">
+  <label>
+    <input type="checkbox" />
+    <div class="toggle">
+      <span class="top_line common"></span>
+      <span class="middle_line common"></span>
+      <span class="bottom_line common"></span>
     </div>
+    <div class="slide">
+      <div class="header">
+        <div class="title">Select Service</div>
+        <img class="icon1" src="static/img/service.png" />
+      </div>
 
-    <button onclick="getRoute()">Start Monitoring</button>
-    <div id="map"></div>
+      <ul>
+        <li>
+          <div class="service-block">
+            <div class="service-title">Traffic Monitoring</div>
+            <img class="icon" src="static/img/traffic1.png" />
+            <!-- toggle button -->
+            <label class="toggle_box">
+              <input type="checkbox" id="Checkbox" />
+              <div class="circle"></div>
+            </label>
+          </div>
+        </li>
 
-    <div id="steps"></div>
+        <li>
+          <div class="service-block">
+            <div class="service-title">Accident Detection</div>
+            <img class="icon" src="static/img/accident1.png" />
+            <label class="toggle_box">
+              <input type="checkbox" id="checkbox" />
+              <div class="circle"></div>
+            </label>
+          </div>
+        </li>
 
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
-    <script src="https://unpkg.com/leaflet-control-geocoder@latest/dist/Control.Geocoder.js"></script>
-    <script src="https://unpkg.com/leaflet-contextmenu@latest/dist/leaflet.contextmenu.min.js"></script>
-    <script src="/static/js/main.js"></script>
+        <li>
+          <div class="service-block">
+            <div class="service-title">Pothole Identification</div>
+            <img class="icon" src="static/img/pothole.png" />
+            <label class="toggle_box">
+              <input type="checkbox" id="Checkbox" />
+              <div class="circle"></div>
+            </label>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </label>
 
-    <script>
-        var map = L.map("map").setView([18.5285, 73.8744], 13);
+  <a href="/index.html">
+    <button id="logout-btn" class="logout-button">Log Out</button>
+  </a>
 
-        mapLink = "<a href='http://openstreetmap.org'>OpenStreetMap</a>";
-        L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-            attribution: 'Leaflet &copy; ' + mapLink + ', contribution',
-            maxZoom: 18
-        }).addTo(map);
+  <a href="/index.html" class="logo"><img src="static/img/logo.png" alt="">SafetyNXT</a>
 
-        var fromMarker, toMarker, routeControl;
-        var fromLat, fromLon; // Move the variable declaration here
+  <div id="map"></div>
 
-        function getRoute() {
-            var fromLocation = document.getElementById("from").value;
-            var toLocation = document.getElementById("to").value;
+  <div id="steps"></div>
 
-            if (!fromLocation || !toLocation) {
-                alert("Please Provide location");
-                return;
-            }
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+  <script src="https://unpkg.com/leaflet-control-geocoder@latest/dist/Control.Geocoder.js"></script>
+  <script src="https://unpkg.com/leaflet-contextmenu@latest/dist/leaflet.contextmenu.min.js"></script>
 
-            if (fromMarker) {
-                map.removeLayer(fromMarker);
-            }
+  <script src="static/js/map.js"></script>
+  <script>
+    // toggle--------------------------------------------------------------------------------------------------------------
 
-            if (toMarker) {
-                map.removeLayer(toMarker);
-            }
+    // Toggle Background box selection
+    let background_boxes = document.querySelectorAll(".background_box");
 
-            if (routeControl) {
-                map.removeControl(routeControl);
-            }
+    // Checkboxes selection
+    let toggleBoxes = document.querySelectorAll(".toggle_box");
+    let trafficToggleBox = document.getElementById("trafficCheckbox");
+    let potholeToggleBox = document.getElementById("potholeCheckbox");
 
-            axios.get("https://nominatim.openstreetmap.org/search", {
-                params: {
-                    format: 'json',
-                    q: fromLocation
-                }
-            }).then(function (response) {
-                fromLat = response.data[0].lat;
-                fromLon = response.data[0].lon;
-                fromMarker = L.marker([fromLat, fromLon]).addTo(map);
-                map.setView([fromLat, fromLon], 13);
+    let circles = document.querySelectorAll(".circle");
 
-                return axios.get("https://nominatim.openstreetmap.org/search", {
-                    params: {
-                        format: 'json',
-                        q: toLocation
-                    }
-                });
-            }).then(function (response) {
-                var toLat = response.data[0].lat;
-                var toLon = response.data[0].lon;
-                toMarker = L.marker([toLat, toLon]).addTo(map);
+    // Add click event listeners to each toggle box
+    toggleBoxes.forEach(function (toggleBox, index) {
+      toggleBox.onclick = function () {
+        // Toggle the checkbox
+        let checkbox = toggleBox.querySelector("input[type='checkbox']");
+        checkbox.checked = !checkbox.checked;
 
-                var routeCoordinates = {
-                    fromLat: fromLat,
-                    fromLon: fromLon,
-                    toLat: toLat,
-                    toLon: toLon,
-                    waypoints: []
-                };
-
-                routeControl = L.Routing.control({
-                    waypoints: [
-                        L.latLng(fromLat, fromLon),
-                        L.latLng(toLat, toLon),
-                    ],
-                    router: L.Routing.osrmv1({
-                        serviceUrl: "https://router.project-osrm.org/route/v1"
-                    })
-                }).on('routeselected', function (e) {
-                    var waypoints = e.route.coordinates.map(function (coord) {
-                        return { lat: coord[0], lon: coord[1] };
-                    });
-                    routeCoordinates.waypoints = waypoints;
-                }).addTo(map);
-
-                axios.post("coordinates/", routeCoordinates).then(function (response) {
-                    console.log(response.data);
-                }).catch(function (error) {
-                    console.log("Check error", error);
-                    alert(error);
-                });
-            });
+        // Move the circle based on the checkbox state
+        let circle = circles[index];
+        if (checkbox.checked) {
+          circle.style.transform = "translateX(34px)";
+          circle.style.backgroundColor = "#fff"; // Set "on" color
+        } else {
+          circle.style.transform = "translateX(0px)";
+          circle.style.backgroundColor = "#000"; // Set "off" color
         }
+      };
+    });
+  </script>
 
-        // Code for the AutoComplete Location Feature
-        // Example locations for Pune
-        var puneLocations = ['Aundh, Pune', 'Koregaon Park, Pune', 'Magarpatta, Pune', 'Shivaji Nagar, Pune', 'Shaniwar Wada, Pune',
-            'Aga Khan Palace, Pune',
-            'Sinhagad Fort, Pune',
-            'Osho Ashram, Pune',
-            'Dagadusheth Halwai Ganpati Temple, Pune',
-            'Raja Dinkar Kelkar Museum, Pune',
-            'Lal Mahal, Pune',
-            'Khadakwasla Dam, Pune',
-            'Pataleshwar Cave Temple, Pune',
-            'Parvati Hill, Pune',
-            'Bund Garden, Pune',
-            'Vetal Tekdi, Pune',
-            'Pu La Deshpande Garden, Pune',
-            'Mulshi Lake and Dam, Pune',
-            'Phoenix Marketcity, Pune',
-            'FC Road (Fergusson College Road), Pune',
-            'Koregaon Park, Pune',
-            'Saras Baug, Pune',
-            'Darshan Museum, Pune',
-            'Rajiv Gandhi Zoological Park, Pune'];
-
-        // Populate datalist with suggestions
-        puneLocations.forEach(function (location) {
-            var option = document.createElement('option');
-            option.value = location;
-            document.getElementById('location-suggestions').appendChild(option.cloneNode(true));
-        });
-
-        // Initialize Awesomplete for input fields
-        var startInput = new Awesomplete(document.getElementById('from'), { list: "#location-suggestions" });
-        var destinationInput = new Awesomplete(document.getElementById('to'), { list: "#location-suggestions" });
-    </script>
 </body>
 
 </html>
