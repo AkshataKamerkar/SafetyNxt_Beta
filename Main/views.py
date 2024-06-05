@@ -113,6 +113,11 @@ def get_cctvs_info(from_lat_float,from_lon_float,to_lat_float,to_lon_float):
 
     print(route_coordinates)
 
+    # TODO: From the given locations add few coordinates in the database ( for each path )
+    '''
+        - On the menu page, jb user location dalta he tb wo jo autocompelete ki list he usme se saare paths ke thode coordinates database me add kro 
+        - Eg. From Pune station To Aga Khan Palace 
+    '''
     cctv_data = pd.read_csv('Database/CcTV.csv')
 
     # Filter the DataFrame based on common coordinates
