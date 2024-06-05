@@ -1,4 +1,6 @@
 import json
+
+import cv2
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import TemplateView, FormView
@@ -29,6 +31,7 @@ import json
 import osmnx as ox
 import networkx as nx
 import pandas as pd
+from ultralytics import YOLO
 
 
 '''
@@ -43,6 +46,48 @@ import pandas as pd
         - Contact Us : On LandingPage  
         - get_loc    : On GetLLs Page    
 '''
+
+
+
+def potholes(cctv_info_map):
+    '''
+
+    :param cctv_info_map: List of the mapped CCTV Id's
+    :return: If the pothole is detected or not
+    '''
+
+
+    # Loading the Deep Learning Model
+    model = YOLO("Models/Potholes_60.pt")
+
+    # TODO: Implement threading for monitoring different CCTV ID's simultaneously
+    cap = cv2.VideoCapture(cctv_info_map)
+
+    while cap.isOpened():
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        # Run batched inference on a list of images
+        results = model(cctv_info_map)  # return a list of Results objects
+
+        # Process results list
+        for result in results:
+            boxes = result.boxes  # Boxes object for bbox outputs
+            masks = result.masks  # Masks object for segmentation masks outputs
+            keypoints = result.keypoints  # Keypoints object for pose outputs
+            probs = result.probs  # Probs object for classification outputs
+
+            print("Probabilities")
+            print(probs)
+
+        # Display the frame
+        cv2.imshow('Object Detection', frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
 
 
 
@@ -146,10 +191,14 @@ def get_coordinates(request):
             print(f"From Lat: {from_lat}, From Lon: {from_lon}")
             print(f"To Lat: {to_lat}, To Lon: {to_lon}")
 
-            # Fetching the Matched CCTV's from the DataBase
+            # Fetching the Matched CCTV ID's from the DataBase
             cctv_info_map = get_cctvs_info(from_lat_float, from_lon_float, to_lat_float, to_lon_float)
 
             print(cctv_info_map)
+
+
+            # Potholes Model
+            detected_potholes = potholes("static/Videos/Potholes/Potholes.mp4")
 
 
 

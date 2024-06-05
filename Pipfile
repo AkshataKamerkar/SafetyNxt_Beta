@@ -12,6 +12,8 @@ osmnx = "*"
 networkx = "*"
 scikit-learn = "*"
 matplotlib = "*"
+opencv-python = "*"
+ultralytics = "*"
 
 [dev-packages]
 
