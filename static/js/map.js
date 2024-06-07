@@ -1,5 +1,3 @@
-
-
 var map = L.map("map").setView([18.5285, 73.8744], 13);
 
 mapLink = "<a href='http://openstreetmap.org'>OpenStreetMap</a>";
