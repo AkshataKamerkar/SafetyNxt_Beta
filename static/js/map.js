@@ -77,8 +77,13 @@ function getRoute() {
             routeCoordinates.waypoints = waypoints;
         }).addTo(map);
 
-        axios.post("coordinates/", routeCoordinates).then(function (response) {
+        return axios.post("coordinates/", routeCoordinates).then(function (response) {
             console.log(response.data);
+             if (response.data.status === 'success') {
+                addMarkers(response.data.detected_list);
+            } else {
+                console.error('Error:', response.data.message);
+            }
         }).catch(function (error) {
             console.log("Check error", error);
             alert(error);
@@ -133,6 +138,27 @@ puneLocations.forEach(function (location) {
 var startInput = new Awesomplete(document.getElementById('from'), { list: "#location-suggestions" });
 var destinationInput = new Awesomplete(document.getElementById('to'), { list: "#location-suggestions" });
 
+
+// Function to add markers to the map
+function addMarkers(detectedList) {
+    // Add pothole markers
+    detectedList.potholes.forEach(function(pothole) {
+        L.marker([pothole.lat, pothole.lon]).addTo(map)
+            .bindPopup('Pothole detected here.');
+    });
+
+    // Add traffic markers
+    detectedList.traffic.forEach(function(traffic) {
+        L.marker([traffic.lat, traffic.lon]).addTo(map)
+            .bindPopup('Traffic detected here.');
+    });
+
+    // Add accident markers
+    detectedList.accidents.forEach(function(accident) {
+        L.marker([accident.lat, accident.lon]).addTo(map)
+            .bindPopup('Accident detected here.');
+    });
+}
 
 // Logout
 function logout() {

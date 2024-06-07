@@ -238,17 +238,31 @@ def get_coordinates(request):
                             ]
             '''
 
-            detected_list = {}
+            #detected_list = {}
 
             # TODO: APPLY THREADING TO MONITOR ALL THE CCTV ID'S
             # Potholes Detection
             # Traffic Detection
             # Accident Detection
 
+            # Create a demo detected_list
+            detected_list = {
+                "potholes": [
+                    {"lat": from_lat_float + 0.001, "lon": from_lon_float + 0.001},
+                    {"lat": from_lat_float + 0.002, "lon": from_lon_float + 0.002},
+                ],
+                "traffic": [
+                    {"lat": to_lat_float - 0.001, "lon": to_lon_float - 0.001},
+                    {"lat": to_lat_float - 0.002, "lon": to_lon_float - 0.002},
+                ],
+                "accidents": [
+                    {"lat": (from_lat_float + to_lat_float) / 2, "lon": (from_lon_float + to_lon_float) / 2}
+                ]
+            }
 
+            return JsonResponse({'status': 'success', 'detected_list': detected_list})
 
-
-            return JsonResponse({'status':'success'})
+            #return JsonResponse({'status':'success'})
 
         except json.JSONDecodeError as e:
             return JsonResponse({'status': 'error', 'message': f'Invalid JSON format: {str(e)}'})
