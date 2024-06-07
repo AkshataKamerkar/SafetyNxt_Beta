@@ -137,18 +137,76 @@ var startInput = new Awesomplete(document.getElementById('from'), { list: "#loca
 var destinationInput = new Awesomplete(document.getElementById('to'), { list: "#location-suggestions" });
 
 
+// Plotting the Markers at Detected Coordinates
+
+// Defining custom icons for potholes and traffic with different colors
+var lightIcon = new L.Icon({
+    iconUrl: 'static/img/img1.jpg',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+var moderateIcon = new L.Icon({
+    iconUrl: 'static/img/img1.jpg',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+var heavyIcon = new L.Icon({
+    iconUrl: 'static/img/img1.jpg',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+
+// Creating a Density Label
+function getDensityLabel(num) {
+    if (num < 0.3) {
+        return 'LIGHT';
+    } else if (num >= 0.3 && num < 0.6) {
+        return 'MODERATE';
+    } else {
+        return 'HEAVY';
+    }
+}
+
+
 // Function to add markers to the map
 function addMarkers(detectedList) {
-    // Add pothole markers
+    // Add pothole markers with density-based icons
     detectedList.potholes.forEach(function(pothole) {
+        var icon;
+        var densityLabel = getDensityLabel(pothole.num);
+        if (densityLabel === 'LIGHT') {
+            icon = lightIcon;
+        } else if (densityLabel === 'MODERATE') {
+            icon = moderateIcon;
+        } else {
+            icon = heavyIcon;
+        }
         L.marker([pothole.lat, pothole.lon]).addTo(map)
-            .bindPopup('Pothole detected here.');
+            .bindPopup(`${densityLabel} Pothole Detected`);
     });
 
-    // Add traffic markers
+    // Add traffic markers with density-based icons
     detectedList.traffic.forEach(function(traffic) {
+        var icon;
+        var densityLabel = getDensityLabel(traffic.num);
+        if (densityLabel === 'LIGHT') {
+            icon = lightIcon;
+        } else if (densityLabel === 'MODERATE') {
+            icon = moderateIcon;
+        } else {
+            icon = heavyIcon;
+        }
         L.marker([traffic.lat, traffic.lon]).addTo(map)
-            .bindPopup('Traffic detected here.');
+            .bindPopup(`${densityLabel} Traffic Detected`);
     });
 
     // Add accident markers

@@ -248,12 +248,12 @@ def get_coordinates(request):
             # Create a demo detected_list
             detected_list = {
                 "potholes": [
-                    {"lat": from_lat_float + 0.001, "lon": from_lon_float + 0.001},
-                    {"lat": from_lat_float + 0.002, "lon": from_lon_float + 0.002},
+                    {"lat": from_lat_float + 0.001, "lon": from_lon_float + 0.001, 'num':0.5},
+                    {"lat": from_lat_float + 0.002, "lon": from_lon_float + 0.002, 'num':0.8},
                 ],
                 "traffic": [
-                    {"lat": to_lat_float - 0.001, "lon": to_lon_float - 0.001},
-                    {"lat": to_lat_float - 0.002, "lon": to_lon_float - 0.002},
+                    {"lat": to_lat_float - 0.001, "lon": to_lon_float - 0.001, 'num':0.2},
+                    {"lat": to_lat_float - 0.002, "lon": to_lon_float - 0.002, 'num':0.7},
                 ],
                 "accidents": [
                     {"lat": (from_lat_float + to_lat_float) / 2, "lon": (from_lon_float + to_lon_float) / 2}
