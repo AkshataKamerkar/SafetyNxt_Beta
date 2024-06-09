@@ -34,6 +34,7 @@ import pandas as pd
 from ultralytics import YOLO
 import threading
 from queue import Queue
+import random
 
 '''
     Total 5 Routes 
@@ -228,18 +229,26 @@ def get_coordinates(request):
 
 
 
+            # Generating Random 5 numbers from the route coordinates
+            total_len = len(route_coordinate)
+            print(total_len)
+
+            # Getting 5 random numbers and appending them in a list
+            random_numbers = [random.randint(5, total_len-1) for _ in range(5)]
+            print(random_numbers)
+
             # Create a demo detected_list
             detected_list = {
                 "potholes": [
-                    {"lat": route_coordinate[0][0], "lon": route_coordinate[0][1], 'num': 0.5},
-                    {"lat": route_coordinate[11][0], "lon": route_coordinate[11][1], 'num': 0.8},
+                    {"lat": route_coordinate[random_numbers[0]][0], "lon": route_coordinate[random_numbers[0]][1], 'num': 0.5},
+                    {"lat": route_coordinate[random_numbers[1]][0], "lon": route_coordinate[random_numbers[1]][1], 'num': 0.8},
                 ],
                 "traffic": [
-                    {"lat": route_coordinate[22][0], "lon": route_coordinate[22][1], 'num': 0.2},
-                    {"lat": route_coordinate[8][0], "lon": route_coordinate[8][1], 'num': 0.7},
+                    {"lat": route_coordinate[random_numbers[2]][0], "lon": route_coordinate[random_numbers[2]][1], 'num': 0.2},
+                    {"lat": route_coordinate[random_numbers[3]][0], "lon": route_coordinate[random_numbers[3]][1], 'num': 0.7},
                 ],
                 "accidents": [
-                    {"lat": route_coordinate[30][0], "lon": route_coordinate[30][1]}
+                    {"lat": route_coordinate[random_numbers[4]][0], "lon": route_coordinate[random_numbers[4]][1]}
                 ]
             }
 
