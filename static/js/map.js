@@ -1,169 +1,74 @@
+// Initialize the map
 var map = L.map("map").setView([18.5285, 73.8744], 13);
 
-mapLink = "<a href='http://openstreetmap.org'>OpenStreetMap</a>";
+// Add tile layer to the map
+var mapLink = "<a href='http://openstreetmap.org'>OpenStreetMap</a>";
 L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: 'Leaflet &copy; ' + mapLink + ', contribution',
     maxZoom: 18
 }).addTo(map);
 
 var fromMarker, toMarker, routeControl;
-var fromLat, fromLon; // Move the variable declaration here
+var fromLat, fromLon;
+var markers = []; // Array to store markers
 
-function getRoute() {
-    var fromLocation = document.getElementById("from").value;
-    var toLocation = document.getElementById("to").value;
+// Custom icons
 
-    if (!fromLocation || !toLocation) {
-        alert("Please Provide location");
-        return;
-    }
+// Custom icons for different types of incidents and density levels
 
-    if (fromMarker) {
-        map.removeLayer(fromMarker);
-    }
-
-    if (toMarker) {
-        map.removeLayer(toMarker);
-    }
-
-    if (routeControl) {
-        map.removeControl(routeControl);
-    }
-
-    axios.get("https://nominatim.openstreetmap.org/search", {
-        params: {
-            format: 'json',
-            q: fromLocation
-        }
-    }).then(function (response) {
-        fromLat = response.data[0].lat;
-        fromLon = response.data[0].lon;
-        fromMarker = L.marker([fromLat, fromLon]).addTo(map);
-        map.setView([fromLat, fromLon], 13);
-
-        return axios.get("https://nominatim.openstreetmap.org/search", {
-            params: {
-                format: 'json',
-                q: toLocation
-            }
-        });
-    }).then(function (response) {
-        var toLat = response.data[0].lat;
-        var toLon = response.data[0].lon;
-        toMarker = L.marker([toLat, toLon]).addTo(map);
-
-        var routeCoordinates = {
-            fromLat: fromLat,
-            fromLon: fromLon,
-            toLat: toLat,
-            toLon: toLon,
-            waypoints: []
-        };
-
-        routeControl = L.Routing.control({
-            waypoints: [
-                L.latLng(fromLat, fromLon),
-                L.latLng(toLat, toLon),
-            ],
-            router: L.Routing.osrmv1({
-                serviceUrl: "https://router.project-osrm.org/route/v1"
-            })
-        }).on('routeselected', function (e) {
-            var waypoints = e.route.coordinates.map(function (coord) {
-                return { lat: coord[0], lon: coord[1] };
-            });
-            routeCoordinates.waypoints = waypoints;
-        }).addTo(map);
-
-        return axios.post("coordinates/", routeCoordinates).then(function (response) {
-            console.log(response.data);
-             if (response.data.status === 'success') {
-                addMarkers(response.data.detected_list);
-            } else {
-                console.error('Error:', response.data.message);
-            }
-        }).catch(function (error) {
-            console.log("Check error", error);
-            alert(error);
-        });
-    });
-}
-
-
-
-function reverseInputs() {
-    // Get the values from the starting and destination input boxes
-    var startInput = document.getElementById("from");
-    var destinationInput = document.getElementById("to");
-
-    // Swap the values
-    var temp = startInput.value;
-    startInput.value = destinationInput.value;
-    destinationInput.value = temp;
-}
-
-// Code for the AutoComplete Location Feature
-// Example locations for Pune
-var puneLocations = ['Aundh, Pune', 'Koregaon Park, Pune', 'Magarpatta, Pune', 'Shivaji Nagar, Pune', 'Shaniwar Wada, Pune',
-    'Aga Khan Palace, Pune',
-    'Sinhagad Fort, Pune',
-    'Osho Ashram, Pune',
-    'Dagadusheth Halwai Ganpati Temple, Pune',
-    'Raja Dinkar Kelkar Museum, Pune',
-    'Lal Mahal, Pune',
-    'Khadakwasla Dam, Pune',
-    'Pataleshwar Cave Temple, Pune',
-    'Parvati Hill, Pune',
-    'Bund Garden, Pune',
-    'Vetal Tekdi, Pune',
-    'Pu La Deshpande Garden, Pune',
-    'Mulshi Lake and Dam, Pune',
-    'Phoenix Marketcity, Pune',
-    'FC Road (Fergusson College Road), Pune',
-    'Koregaon Park, Pune',
-    'Saras Baug, Pune',
-    'Darshan Museum, Pune',
-    'Rajiv Gandhi Zoological Park, Pune'];
-
-// Populate datalist with suggestions
-puneLocations.forEach(function (location) {
-    var option = document.createElement('option');
-    option.value = location;
-    document.getElementById('location-suggestions').appendChild(option.cloneNode(true));
-});
-
-// Initialize Awesomplete for input fields
-var startInput = new Awesomplete(document.getElementById('from'), { list: "#location-suggestions" });
-var destinationInput = new Awesomplete(document.getElementById('to'), { list: "#location-suggestions" });
-
-
-// Plotting the Markers at Detected Coordinates
-
-// Defining custom icons for potholes and traffic with different colors
-var lightIcon = new L.Icon({
-    iconUrl: 'static/img/img1.jpg',
-    iconSize: [25, 41],
+var trafficLightIcon = L.icon({
+    iconUrl: 'static/img/map/traffic_green.png',
+    iconSize: [35, 55],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
     shadowSize: [41, 41]
 });
 
-var moderateIcon = new L.Icon({
-    iconUrl: 'static/img/img1.jpg',
-    iconSize: [25, 41],
+var trafficModerateIcon = L.icon({
+    iconUrl: 'static/img/map/traffic_yellow.png',
+    iconSize: [35, 55],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
     shadowSize: [41, 41]
 });
 
-var heavyIcon = new L.Icon({
-    iconUrl: 'static/img/img1.jpg',
-    iconSize: [25, 41],
+var trafficHeavyIcon = L.icon({
+    iconUrl: 'static/img/map/traffic_red.png',
+    iconSize: [35, 55],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
     shadowSize: [41, 41]
 });
 
+var potholeLightIcon = L.icon({
+    iconUrl: 'static/img/map/pothole_green.png',
+    iconSize: [30, 50],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+var potholeModerateIcon = L.icon({
+    iconUrl: 'static/img/map/pothole_yellow.png',
+    iconSize: [30, 50],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+var potholeHeavyIcon = L.icon({
+    iconUrl: 'static/img/map/pothole_red.png',
+    iconSize: [30, 50],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+var accidentIcon = L.icon({
+    iconUrl: 'static/img/map/accident_marker.png',
+    iconSize: [40, 60],
+    iconAnchor: [12, 41]
+});
 
 // Creating a Density Label
 function getDensityLabel(num) {
@@ -176,51 +81,162 @@ function getDensityLabel(num) {
     }
 }
 
+function getRoute() {
+    var fromLocation = document.getElementById("from").value;
+    var toLocation = document.getElementById("to").value;
+
+    if (!fromLocation || !toLocation) {
+        alert("Please provide locations");
+        return;
+    }
+
+    // Remove existing markers and route
+    if (fromMarker) map.removeLayer(fromMarker);
+    if (toMarker) map.removeLayer(toMarker);
+    if (routeControl) map.removeControl(routeControl);
+
+    // Remove all markers from the map
+    markers.forEach(marker => map.removeLayer(marker));
+    markers = [];
+
+    // Get coordinates for the 'from' location
+    axios.get("https://nominatim.openstreetmap.org/search", {
+        params: { format: 'json', q: fromLocation }
+    }).then(function (response) {
+        fromLat = response.data[0].lat;
+        fromLon = response.data[0].lon;
+        fromMarker = L.marker[fromLat, fromLon].addTo(map); // Use custom icon
+        map.setView([fromLat, fromLon], 13);
+
+        // Get coordinates for the 'to' location
+        return axios.get("https://nominatim.openstreetmap.org/search", {
+            params: { format: 'json', q: toLocation }
+        });
+    }).then(function (response) {
+        var toLat = response.data[0].lat;
+        var toLon = response.data[0].lon;
+        toMarker = L.marker[toLat, toLon].addTo(map);
+
+        var routeCoordinates = {
+            fromLat: fromLat,
+            fromLon: fromLon,
+            toLat: toLat,
+            toLon: toLon,
+            waypoints: []
+        };
+
+        // Add route control to the map
+        routeControl = L.Routing.control({
+            waypoints: [
+                L.latLng(fromLat, fromLon),
+                L.latLng(toLat, toLon),
+            ],
+            router: L.Routing.osrmv1({
+                serviceUrl: "https://router.project-osrm.org/route/v1"
+            })
+        }).on('routeselected', function (e) {
+            var waypoints = e.route.coordinates.map(function (coord) {
+                return { lat: coord.lat, lon: coord.lng };
+            });
+            routeCoordinates.waypoints = waypoints;
+        }).addTo(map);
+
+        // Send route coordinates to the server
+        return axios.post("coordinates/", routeCoordinates);
+    }).then(function (response) {
+        if (response.data.status === 'success') {
+            addMarkers(response.data.detected_list);
+        } else {
+            console.error('Error:', response.data.message);
+        }
+    }).catch(function (error) {
+        console.error("Error:", error);
+        alert(error);
+    });
+}
+
+// Function to reverse the inputs
+function reverseInputs() {
+    var startInput = document.getElementById("from");
+    var destinationInput = document.getElementById("to");
+    var temp = startInput.value;
+    startInput.value = destinationInput.value;
+    destinationInput.value = temp;
+}
+
+// Example locations for Pune
+var puneLocations = ['Aundh, Pune', 'Koregaon Park, Pune', 'Magarpatta, Pune', 'Shivaji Nagar, Pune', 'Shaniwar Wada, Pune',
+    'Aga Khan Palace, Pune', 'Sinhagad Fort, Pune', 'Osho Ashram, Pune', 'Dagadusheth Halwai Ganpati Temple, Pune',
+    'Raja Dinkar Kelkar Museum, Pune', 'Lal Mahal, Pune', 'Khadakwasla Dam, Pune', 'Pataleshwar Cave Temple, Pune',
+    'Parvati Hill, Pune', 'Bund Garden, Pune', 'Vetal Tekdi, Pune', 'Pu La Deshpande Garden, Pune', 'Mulshi Lake and Dam, Pune',
+    'Phoenix Marketcity, Pune', 'FC Road (Fergusson College Road), Pune', 'Koregaon Park, Pune', 'Saras Baug, Pune',
+    'Darshan Museum, Pune', 'Rajiv Gandhi Zoological Park, Pune'];
+
+// Populate datalist with suggestions
+puneLocations.forEach(function (location) {
+    var option = document.createElement('option');
+    option.value = location;
+    document.getElementById('location-suggestions').appendChild(option.cloneNode(true));
+});
+
+// Initialize Awesomplete for input fields
+var startInput = new Awesomplete(document.getElementById('from'), { list: "#location-suggestions" });
+var destinationInput = new Awesomplete(document.getElementById('to'), { list: "#location-suggestions" });
 
 // Function to add markers to the map
 function addMarkers(detectedList) {
-    // Add pothole markers with density-based icons
+    // Remove all existing markers before adding new ones
+    markers.forEach(marker => map.removeLayer(marker));
+    markers = [];
+
+     // Add pothole markers
     detectedList.potholes.forEach(function(pothole) {
         var icon;
         var densityLabel = getDensityLabel(pothole.num);
         if (densityLabel === 'LIGHT') {
-            icon = lightIcon;
+            icon = potholeLightIcon;
+            var marker = L.marker([pothole.lat, pothole.lon], {icon: icon}).addTo(map)
+                .bindPopup('Small Pothole detected here.');
+            markers.push(marker);
         } else if (densityLabel === 'MODERATE') {
-            icon = moderateIcon;
+            icon = potholeModerateIcon;
+            var marker = L.marker([pothole.lat, pothole.lon], {icon: icon}).addTo(map)
+                .bindPopup('Moderate Pothole detected here.');
+            markers.push(marker);
         } else {
-            icon = heavyIcon;
+            icon = potholeHeavyIcon;
+            var marker = L.marker([pothole.lat, pothole.lon], {icon: icon}).addTo(map)
+                .bindPopup('Large Pothole detected here.');
+            markers.push(marker);
         }
-        L.marker([pothole.lat, pothole.lon]).addTo(map)
-            .bindPopup(`${densityLabel} Pothole Detected`);
     });
 
-    // Add traffic markers with density-based icons
+    // Add traffic markers
     detectedList.traffic.forEach(function(traffic) {
         var icon;
         var densityLabel = getDensityLabel(traffic.num);
         if (densityLabel === 'LIGHT') {
-            icon = lightIcon;
+            icon = trafficLightIcon;
+            var marker = L.marker([traffic.lat, traffic.lon], {icon: icon}).addTo(map)
+                .bindPopup('Light Traffic detected here.');
+            markers.push(marker);
         } else if (densityLabel === 'MODERATE') {
-            icon = moderateIcon;
+            icon = trafficModerateIcon;
+            var marker = L.marker([traffic.lat, traffic.lon], {icon: icon}).addTo(map)
+                .bindPopup('Moderate Traffic detected here.');
+            markers.push(marker);
         } else {
-            icon = heavyIcon;
+            icon = trafficHeavyIcon;
+            var marker = L.marker([traffic.lat, traffic.lon], {icon: icon}).addTo(map)
+                .bindPopup('Heavy Traffic detected here.');
+            markers.push(marker);
         }
-        L.marker([traffic.lat, traffic.lon]).addTo(map)
-            .bindPopup(`${densityLabel} Traffic Detected`);
     });
 
     // Add accident markers
     detectedList.accidents.forEach(function(accident) {
-        L.marker([accident.lat, accident.lon]).addTo(map)
+        var marker = L.marker([accident.lat, accident.lon], {icon: accidentIcon}).addTo(map)
             .bindPopup('Accident detected here.');
+        markers.push(marker);
     });
-}
-
-// Logout
-function logout() {
-  // You can implement logout logic here
-  // For example, redirect to a logout route or perform an API call
-
-  // For demonstration purposes, let's just alert a message
-  alert('Logout clicked! Implement your logout logic here.');
 }
