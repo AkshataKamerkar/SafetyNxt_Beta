@@ -35,7 +35,6 @@ from ultralytics import YOLO
 import threading
 from queue import Queue
 
-
 '''
     Total 5 Routes 
         - LandingPage      : Nav, MainVideo/ MainModel, Services, Features, Contact Form, Testimonials, Footer 
@@ -43,19 +42,18 @@ from queue import Queue
         - LogInSignUp Page : AllAuth
         - GetLLs Page      : Formed based page to take start location and end location from the user along with the Start Monitoring Button 
         - Map Page         : Here the results will be displayed
-        
+
     Total 2 Forms 
         - Contact Us : On LandingPage  
         - get_loc    : On GetLLs Page  
-        
-        
+
+
     Can Implement 
         - Dashboard ( new page ) containing the info of all the previous accidents [ Location, time ]   
 '''
 
 
-
-def potholes(cctv_id,result_queue):
+def potholes(cctv_id, result_queue):
     '''
 
     :param cctv_info_map: List of the mapped CCTV Id's
@@ -65,7 +63,6 @@ def potholes(cctv_id,result_queue):
               detected will be calculated and the dict of potholes_coordinates along with the number of potholes will be detected
 
     '''
-
 
     # Loading the Deep Learning Model
     model = YOLO("Models/Potholes_60.pt")
@@ -99,7 +96,6 @@ def potholes(cctv_id,result_queue):
                         if coord in pothole_details:
                             pothole_details[coord] += 1
 
-
         # Display the frame
         cv2.imshow('Object Detection', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -109,14 +105,7 @@ def potholes(cctv_id,result_queue):
     cv2.destroyAllWindows()
 
 
-
-
-
-
-
-
-
-def get_cctvs_info(from_lat_float,from_lon_float,to_lat_float,to_lon_float):
+def get_cctvs_info(from_lat_float, from_lon_float, to_lat_float, to_lon_float):
     '''
 
     :param from_lat_float: Floating point latitude of start location
@@ -129,7 +118,6 @@ def get_cctvs_info(from_lat_float,from_lon_float,to_lat_float,to_lon_float):
               Coordinates Database and matching Coordinates will be returned
 
     '''
-
 
     G = ox.graph_from_point((from_lat_float, from_lon_float), dist=5000, network_type='all')
 
@@ -156,16 +144,13 @@ def get_cctvs_info(from_lat_float,from_lon_float,to_lat_float,to_lon_float):
     # Display the matching coordinates
     matching_coordinates_with_cam_id = common_coordinates_df['Cam_Id'].values
 
-
     return matching_coordinates_with_cam_id
-
 
 
 class LandingPage(FormView):
     template_name = 'landingPage.html'
     form_class = ContactForm
     success_url = '/'  # Redirect URL after successful form submission
-
 
     def form_valid(self, form):
         form.save()  # This saves the form data to the database using the model
@@ -178,30 +163,25 @@ class LandingPage(FormView):
         ls_email.append(email)
 
         # Calling the actual function
-        send_email_to_client(ls_email,fname)
+        send_email_to_client(ls_email, fname)
 
         # To avoid sending mail to the previous users
         ls_email.clear()
 
-        messages.info(self.request,'Your message has been successfully submitted !! ')
+        messages.info(self.request, 'Your message has been successfully submitted !! ')
 
         return super().form_valid(form)
-
-
 
 
 # AboutUs is a TemplateView since we just hv to render a simple template and dont have to perform form based or data retrival frm the models operations
 # Creating the About Us Page
 class AboutUs(TemplateView):
-
     template_name = 'about.html'
-
 
 
 @method_decorator(csrf_exempt, name='dispatch')
 class Map(TemplateView):
     template_name = 'menu.html'
-
 
 
 @csrf_exempt
@@ -238,7 +218,7 @@ def get_coordinates(request):
                             ]
             '''
 
-            #detected_list = {}
+            # detected_list = {}
 
             # TODO: APPLY THREADING TO MONITOR ALL THE CCTV ID'S
             # Potholes Detection
@@ -248,12 +228,12 @@ def get_coordinates(request):
             # Create a demo detected_list
             detected_list = {
                 "potholes": [
-                    {"lat": from_lat_float + 0.001, "lon": from_lon_float + 0.001, 'num':0.5},
-                    {"lat": from_lat_float + 0.002, "lon": from_lon_float + 0.002, 'num':0.8},
+                    {"lat": from_lat_float + 0.001, "lon": from_lon_float + 0.001, 'num': 0.5},
+                    {"lat": from_lat_float + 0.002, "lon": from_lon_float + 0.002, 'num': 0.8},
                 ],
                 "traffic": [
-                    {"lat": to_lat_float - 0.001, "lon": to_lon_float - 0.001, 'num':0.2},
-                    {"lat": to_lat_float - 0.002, "lon": to_lon_float - 0.002, 'num':0.7},
+                    {"lat": to_lat_float - 0.001, "lon": to_lon_float - 0.001, 'num': 0.2},
+                    {"lat": to_lat_float - 0.002, "lon": to_lon_float - 0.002, 'num': 0.7},
                 ],
                 "accidents": [
                     {"lat": (from_lat_float + to_lat_float) / 2, "lon": (from_lon_float + to_lon_float) / 2}
@@ -262,7 +242,7 @@ def get_coordinates(request):
 
             return JsonResponse({'status': 'success', 'detected_list': detected_list})
 
-            #return JsonResponse({'status':'success'})
+            # return JsonResponse({'status':'success'})
 
         except json.JSONDecodeError as e:
             return JsonResponse({'status': 'error', 'message': f'Invalid JSON format: {str(e)}'})
