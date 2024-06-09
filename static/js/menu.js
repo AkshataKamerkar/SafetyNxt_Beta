@@ -72,10 +72,3 @@ toggleBoxes.forEach(function (toggleBox, index) {
   };
 });
 
-function logout() {
-  // You can implement logout logic here
-  // For example, redirect to a logout route or perform an API call
-
-  // For demonstration purposes, let's just alert a message
-  alert('Logout clicked! Implement your logout logic here.');
-}
