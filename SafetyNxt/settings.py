@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'SafetyNxt.urls'
@@ -145,6 +146,13 @@ AUTHENTICATION_BACKENDS = [
 
 ]
 
+ACCOUNT_RATE_LIMITS = {
+    'login_failed': '5/5m',  # 5 failed login attempts per 5 minutes
+    'signup': '20/h',  # 20 signups per hour
+    'password_reset': '5/1h',  # 5 password reset attempts per hour
+}
+
+
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 
@@ -155,8 +163,6 @@ ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_CONFIRM_EMAIL_ON_GET = False
 
-ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 3
-ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 3600
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
 
