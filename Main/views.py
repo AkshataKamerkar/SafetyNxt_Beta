@@ -112,7 +112,7 @@ def get_cctvs_info(from_lat_float, from_lon_float, to_lat_float, to_lon_float):
     :param from_lon_float: Floating point longitude of start location
     :param to_lat_float: Floating point lotitude of end location
     :param to_lon_float: Floating point longitude of end location
-    :return: The list of CCTV's (including Id's) that are present in the shortest path bw start and end location
+    :return: The list of CCTV's (including Id's) that are present in the shortest path bw start and end location, list of latitude and longitude of the Matching CCTV ID's
     :working: Input of Source and Destination Coordinates entered by the user will be given to the function, shortest distance bw the
               Source and Destination will be calculated and the Coordinates of the shortest distance will be matched with the CCTV
               Coordinates Database and matching Coordinates will be returned
@@ -124,7 +124,7 @@ def get_cctvs_info(from_lat_float, from_lon_float, to_lat_float, to_lon_float):
     start_node = ox.distance.nearest_nodes(G, from_lon_float, from_lat_float)
     end_node = ox.distance.nearest_nodes(G, to_lon_float, to_lat_float)
 
-    route = nx.shortest_path(G, start_node, end_node, weight='lenght')
+    route = nx.shortest_path(G, start_node, end_node, weight='length')
 
     route_coordinates = [(G.nodes[node]['y'], G.nodes[node]['x']) for node in route]
 
@@ -141,10 +141,12 @@ def get_cctvs_info(from_lat_float, from_lon_float, to_lat_float, to_lon_float):
     common_coordinates_df = cctv_data[
         cctv_data.apply(lambda row: (row['Latitude'], row['Longitude']) in route_coordinates, axis=1)]
 
+
     # Display the matching coordinates
     matching_coordinates_with_cam_id = common_coordinates_df['Cam_Id'].values
 
-    return matching_coordinates_with_cam_id
+
+    return matching_coordinates_with_cam_id, route_coordinates
 
 
 class LandingPage(FormView):
@@ -205,10 +207,9 @@ def get_coordinates(request):
             print(f"From Lat: {from_lat}, From Lon: {from_lon}")
             print(f"To Lat: {to_lat}, To Lon: {to_lon}")
 
-            # Fetching the Matched CCTV ID's from the DataBase
-            cctv_info_map = get_cctvs_info(from_lat_float, from_lon_float, to_lat_float, to_lon_float)
+            # Fetching the Matched CCTV ID's, their lan and their lon from the DataBase
+            cctv_info_map, route_coordinate = get_cctvs_info(from_lat_float, from_lon_float, to_lat_float, to_lon_float)
 
-            print(cctv_info_map)
 
             ''' 
             detected_list = [
@@ -225,18 +226,20 @@ def get_coordinates(request):
             # Traffic Detection
             # Accident Detection
 
+
+
             # Create a demo detected_list
             detected_list = {
                 "potholes": [
-                    {"lat": from_lat_float + 0.001, "lon": from_lon_float + 0.001, 'num': 0.5},
-                    {"lat": from_lat_float + 0.002, "lon": from_lon_float + 0.002, 'num': 0.8},
+                    {"lat": route_coordinate[0][0], "lon": route_coordinate[0][1], 'num': 0.5},
+                    {"lat": route_coordinate[11][0], "lon": route_coordinate[11][1], 'num': 0.8},
                 ],
                 "traffic": [
-                    {"lat": to_lat_float - 0.001, "lon": to_lon_float - 0.001, 'num': 0.2},
-                    {"lat": to_lat_float - 0.002, "lon": to_lon_float - 0.002, 'num': 0.7},
+                    {"lat": route_coordinate[22][0], "lon": route_coordinate[22][1], 'num': 0.2},
+                    {"lat": route_coordinate[8][0], "lon": route_coordinate[8][1], 'num': 0.7},
                 ],
                 "accidents": [
-                    {"lat": (from_lat_float + to_lat_float) / 2, "lon": (from_lon_float + to_lon_float) / 2}
+                    {"lat": route_coordinate[30][0], "lon": route_coordinate[30][1]}
                 ]
             }
 
