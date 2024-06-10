@@ -9,7 +9,7 @@ L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 var fromMarker, toMarker, routeControl;
-var fromLat, fromLon;
+var fromLat, fromLon, toLat, toLon;
 var markers = []; // Array to store markers
 
 // Custom icons
@@ -17,7 +17,7 @@ var markers = []; // Array to store markers
 // Custom icons for different types of incidents and density levels
 
 var trafficLightIcon = L.icon({
-    iconUrl: 'static/img/traffic_green.png',
+    iconUrl: 'static/img/map/traffic_green.png',
     iconSize: [35, 55],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
@@ -25,7 +25,7 @@ var trafficLightIcon = L.icon({
 });
 
 var trafficModerateIcon = L.icon({
-    iconUrl: 'static/img/traffic_yellow.png',
+    iconUrl: 'static/img/map/traffic_yellow.png',
     iconSize: [35, 55],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
@@ -84,6 +84,8 @@ function getDensityLabel(num) {
 function getRoute() {
     var fromLocation = document.getElementById("from").value;
     var toLocation = document.getElementById("to").value;
+    console.log(fromLocation)
+    console.log(toLocation)
 
     if (!fromLocation || !toLocation) {
         alert("Please provide locations");
@@ -113,8 +115,8 @@ function getRoute() {
             params: { format: 'json', q: toLocation }
         });
     }).then(function (response) {
-        var toLat = response.data[0].lat;
-        var toLon = response.data[0].lon;
+        var toLat = response.data[1].lat;
+        var toLon = response.data[1].lon;
         toMarker = L.marker([toLat, toLon]).addTo(map);
 
         var routeCoordinates = {
