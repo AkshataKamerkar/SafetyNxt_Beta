@@ -9,7 +9,7 @@ L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 var fromMarker, toMarker, routeControl;
-var fromLat, fromLon;
+var fromLat, fromLon, toLat, toLon;
 var markers = []; // Array to store markers
 
 // Custom icons
@@ -84,6 +84,8 @@ function getDensityLabel(num) {
 function getRoute() {
     var fromLocation = document.getElementById("from").value;
     var toLocation = document.getElementById("to").value;
+    console.log(fromLocation)
+    console.log(toLocation)
 
     if (!fromLocation || !toLocation) {
         alert("Please provide locations");
@@ -105,7 +107,7 @@ function getRoute() {
     }).then(function (response) {
         fromLat = response.data[0].lat;
         fromLon = response.data[0].lon;
-        fromMarker = L.marker[fromLat, fromLon].addTo(map); // Use custom icon
+        fromMarker = L.marker([fromLat, fromLon]).addTo(map); // Use custom icon
         map.setView([fromLat, fromLon], 13);
 
         // Get coordinates for the 'to' location
@@ -113,9 +115,9 @@ function getRoute() {
             params: { format: 'json', q: toLocation }
         });
     }).then(function (response) {
-        var toLat = response.data[0].lat;
-        var toLon = response.data[0].lon;
-        toMarker = L.marker[toLat, toLon].addTo(map);
+        var toLat = response.data[1].lat;
+        var toLon = response.data[1].lon;
+        toMarker = L.marker([toLat, toLon]).addTo(map);
 
         var routeCoordinates = {
             fromLat: fromLat,
