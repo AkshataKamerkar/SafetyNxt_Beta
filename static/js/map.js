@@ -17,7 +17,7 @@ var markers = []; // Array to store markers
 // Custom icons for different types of incidents and density levels
 
 var trafficLightIcon = L.icon({
-    iconUrl: 'static/img/map/traffic_green.png',
+    iconUrl: 'static/img/traffic_green.png',
     iconSize: [35, 55],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
@@ -25,7 +25,7 @@ var trafficLightIcon = L.icon({
 });
 
 var trafficModerateIcon = L.icon({
-    iconUrl: 'static/img/map/traffic_yellow.png',
+    iconUrl: 'static/img/traffic_yellow.png',
     iconSize: [35, 55],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
