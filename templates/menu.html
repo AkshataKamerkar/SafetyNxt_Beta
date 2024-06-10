@@ -25,25 +25,25 @@
     <div class="container">
       <!-- Input fields for starting point and destination -->
       <div class="input-box">
-        <img class="icon-left" src="static/img/menu/start location.png" />
+        <img class="icon-left" src="/static/img/start location.png" />
         <div class="bg-bar"></div>
-        <img class="icon-right" src="static/img/menu/search.png" />
+        <img class="icon-right" src="/static/img/search.png" />
         <input type="text" id="from" class="text-box" list="location-suggestions" placeholder="Choose starting point" />
         <datalist id="location-suggestions"></datalist>
       </div>
 
       <div class="destination-box">
-        <img class="icon-left" src="static/img/menu/destination.png" />
+        <img class="icon-left" src="/static/img/destination.png" />
         <div class="bg-bar"></div>
-        <img class="icon-right" src="static/img/menu/search.png" />
+        <img class="icon-right" src="/static/img/search.png" />
         <input type="text" id="to" list="location-suggestions" class="text-box" placeholder="Choose destination" />
       </div>
 
       <!-- Rotate Icon -->
-      <img class="rotate-icon" src="static/img/menu/dot.png" />
+      <img class="rotate-icon" src="/static/img/dot.png" />
 
       <!-- Additional Icon -->
-      <img class="additional-icon" src="static/img/menu/switch.png" onclick="reverseInputs()" />
+      <img class="additional-icon" src="/static/img/switch.png" onclick="reverseInputs()" />
 
       <!-- Find Route Box -->
       <div class="find-route-box">
@@ -66,14 +66,14 @@
     <div class="slide">
       <div class="header">
         <div class="title">Select Service</div>
-        <img class="icon1" src="static/img/menu/service.png" />
+        <img class="icon1" src="/static/img/service.png" />
       </div>
 
       <ul>
         <li>
           <div class="service-block">
             <div class="service-title">Traffic Monitoring</div>
-            <img class="icon" src="static/img/menu/traffic.png" />
+            <img class="icon" src="/static/img/traffic.png" />
             <!-- toggle button -->
             <label class="toggle_box">
               <input type="checkbox" id="Checkbox" />
@@ -85,7 +85,7 @@
         <li>
           <div class="service-block">
             <div class="service-title">Accident Detection</div>
-            <img class="icon" src="static/img/menu/accident1.png" />
+            <img class="icon" src="/static/img/accident1.png" />
             <label class="toggle_box">
               <input type="checkbox" id="checkbox" />
               <div class="circle"></div>
@@ -96,7 +96,7 @@
         <li>
           <div class="service-block">
             <div class="service-title">Pothole Identification</div>
-            <img class="icon" src="static/img/menu/pothole.png" />
+            <img class="icon" src="/static/img/pothole.png" />
             <label class="toggle_box">
               <input type="checkbox" id="Checkbox" />
               <div class="circle"></div>
@@ -111,7 +111,7 @@
     <button id="logout-btn" class="logout-button">Cancel</button>
   </a>
 
-  <a href="/" class="logo"><img src="static/img/home/logo.png" alt="">SafetyNXT</a>
+  <a href="/" class="logo"><img src="/static/img/logo.png" alt="">SafetyNXT</a>
 
   <div id="map"></div>
 
