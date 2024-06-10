@@ -105,7 +105,7 @@ function getRoute() {
     }).then(function (response) {
         fromLat = response.data[0].lat;
         fromLon = response.data[0].lon;
-        fromMarker = L.marker[fromLat, fromLon].addTo(map); // Use custom icon
+        fromMarker = L.marker([fromLat, fromLon]).addTo(map); // Use custom icon
         map.setView([fromLat, fromLon], 13);
 
         // Get coordinates for the 'to' location
@@ -115,7 +115,7 @@ function getRoute() {
     }).then(function (response) {
         var toLat = response.data[0].lat;
         var toLon = response.data[0].lon;
-        toMarker = L.marker[toLat, toLon].addTo(map);
+        toMarker = L.marker([toLat, toLon]).addTo(map);
 
         var routeCoordinates = {
             fromLat: fromLat,
