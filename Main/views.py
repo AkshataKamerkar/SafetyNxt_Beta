@@ -7,16 +7,16 @@ from django.views.generic import TemplateView, FormView
 from django.views.generic.edit import FormView
 from django.http import JsonResponse, HttpResponseRedirect
 from django.views import View
-from .forms import ContactForm, RouteFrom
+from Main.forms import ContactForm, RouteFrom
 from .models import Contact
-from .utils import send_email_to_client
+from Main.utils import send_email_to_client
 from django.contrib import messages
-from .functions import get_location, get_latitude_longitude
+from Main.functions import get_location, get_latitude_longitude
 from django.shortcuts import redirect
 from django.views.generic.edit import FormView
 from django.views.generic.base import TemplateView
 from django.http import HttpResponseRedirect
-from .forms import RouteFrom
+from Main.forms import RouteFrom
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
@@ -35,6 +35,10 @@ from ultralytics import YOLO
 import threading
 from queue import Queue
 import random
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 '''
     Total 5 Routes 
@@ -205,8 +209,15 @@ def get_coordinates(request):
             to_lat_float = float(to_lat)
             to_lon_float = float(to_lon)
 
-            print(f"From Lat: {from_lat}, From Lon: {from_lon}")
-            print(f"To Lat: {to_lat}, To Lon: {to_lon}")
+            logger.debug(f"From Lat: {from_lat}, From Lon: {from_lon}")
+            logger.debug(f"To Lat: {to_lat}, To Lon: {to_lon}")
+
+            try:
+                cctv_info_map, route_coordinate = get_cctvs_info(from_lat_float, from_lon_float, to_lat_float,
+                                                                 to_lon_float)
+            except ImportError as e:
+                logger.error(f"ImportError: {str(e)}")
+                return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
 
             # Fetching the Matched CCTV ID's, their lan and their lon from the DataBase
             cctv_info_map, route_coordinate = get_cctvs_info(from_lat_float, from_lon_float, to_lat_float, to_lon_float)
@@ -231,11 +242,15 @@ def get_coordinates(request):
 
             # Generating Random 5 numbers from the route coordinates
             total_len = len(route_coordinate)
-            print(total_len)
+            logger.debug(f"Total route length: {total_len}")
 
             # Getting 5 random numbers and appending them in a list
-            random_numbers = [random.randint(5, total_len-1) for _ in range(5)]
-            print(random_numbers)
+            if total_len < 5:
+                logger.error("Not enough route coordinates to generate detected list.")
+                return JsonResponse({'status': 'error', 'message': 'Not enough route coordinates'}, status=500)
+
+            random_numbers = [random.randint(0, total_len - 1) for _ in range(5)]
+            logger.debug(f"Random indices: {random_numbers}")
 
             # Create a demo detected_list
             detected_list = {
@@ -252,11 +267,22 @@ def get_coordinates(request):
                 ]
             }
 
-            return JsonResponse({'status': 'success', 'detected_list': detected_list})
+            logger.debug(f"Detected list: {detected_list}")
 
+            return JsonResponse({'status': 'success', 'detected_list': detected_list})
             # return JsonResponse({'status':'success'})
 
-        except json.JSONDecodeError as e:
-            return JsonResponse({'status': 'error', 'message': f'Invalid JSON format: {str(e)}'})
 
-    return JsonResponse({'status': 'error', 'message': 'Invalid Request Method'})
+        except json.JSONDecodeError as e:
+
+            logger.error(f"Invalid JSON format: {str(e)}")
+
+            return JsonResponse({'status': 'error', 'message': f'Invalid JSON format: {str(e)}'}, status=400)
+
+        except Exception as e:
+
+            logger.error(f"Unexpected error: {str(e)}")
+
+            return JsonResponse({'status': 'error', 'message': f'Unexpected error: {str(e)}'}, status=500)
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid Request Method'}, status=405)
