@@ -35,8 +35,11 @@ from ultralytics import YOLO
 import threading
 from queue import Queue
 import random
-
+from email.message import EmailMessage
+import ssl
+import smtplib
 import logging
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -56,6 +59,122 @@ logger = logging.getLogger(__name__)
     Can Implement 
         - Dashboard ( new page ) containing the info of all the previous accidents [ Location, time ]   
 '''
+
+def get_location_from_lls(latitude, longitude):
+
+    '''
+
+    :param latitude: Latitude of a given Coordinate
+    :param longitude: Longitude of a given Coordinate
+    :return: Name of that place based on its coordinates
+    '''
+    try:
+        geolocator = Nominatim(user_agent="location_app")
+        location = geolocator.reverse(f"{latitude}, {longitude}", language='en')
+        return location.address if location else "Location not found."
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+
+def get_hosptials(lat,lon):
+
+    '''
+        :param lat: Latitude of the Accident Location
+        :param lon: Longitude of the Accident Location
+        :return : A list containing HospitalName, and email of the Nearest Hospital
+        :workflow : This function will take the lat, lon of the detected accident and using it as a center it will search for the hospitals within the area of 2KM
+                    Later it will fetch those hospitals info and save it in a temporary/dynamic database. After creating the Dynamic Database ( Upto 5 Entries ), we will
+                    perform 'left' join on the new Database (hospital_info) and the Local Database (hospital_contacts) and will return the 1st entry of that merged database
+    '''
+    map_center = (lat,lon)
+
+    # Create a network graph around the target location (here, within 2 kilometers)
+    G = ox.graph_from_point(map_center, dist=2000, network_type='all')
+
+    # Get the nearest node to the target coordinate
+    target_node = ox.distance.nearest_nodes(G, map_center[1], map_center[0])
+
+    # Retrieve hospitals within a certain radius from the target coordinate using OSMnx
+    hospitals = ox.geometries_from_point(map_center, tags={'amenity': 'hospital'}, dist=2000)
+
+    # Extract hospital information
+    hospital_info = []
+    for idx, hospital in hospitals.iterrows():
+        name = hospital['name']
+        lat = hospital.geometry.centroid.y
+        lon = hospital.geometry.centroid.x
+        hospital_info.append((name, lat, lon))
+        if len(hospital_info) == 5:
+            break
+
+    print(hospital_info)
+
+    hospital_data = pd.DataFrame(hospital_info,columns=['HospitalName','Latitude','Longitude'])
+
+    hospital_data.head()
+
+    hospital_contacts = pd.read_csv('Database/pune_hospitals.csv')
+
+    # Performing Left Join
+
+    merged_data = pd.merge(hospital_data, hospital_contacts, on=['Latitude', 'Longitude'], how='left',
+                           suffixes=('_data', '_contact'))
+
+    info = [merged_data['HospitalName_data'].iloc[0], merged_data['Email'].iloc[0]]
+
+    return info
+
+
+def send_email(hospital_data,lat,lon):
+    '''
+
+    :param hospital_data: List containing the Name and Email of the Nearest Hospital
+    :param lat: Latitude of the Accident location
+    :param lon: Logitude of the Accident location
+    :return: This function will send email to the nearest hospital
+    '''
+
+    accident_location = get_location_from_lls(lat,lon)
+    mail_user = 'ai.safetynxt@gmail.com'
+    mail_pass = os.environ.get('TestPass')
+
+    subject = "Urgent: Accident Detected - Immediate Medical Attention Required"
+    body = '''
+        Dear {},
+                    An accident has been detected near your hospital at {}. Immediate medical attention is crucial.
+                    Please prepare your medical team to respond to this emergency situation promptly.
+
+        Thank you for your swift action.
+
+        Sincerely,
+        SafetyNXT Team
+                '''.format(hospital_data[0], accident_location)
+
+
+    em = EmailMessage()
+    em['From'] = mail_user
+    em['To'] = hospital_data[1]
+    em['Subject'] = subject
+    em.set_content(body)
+
+    context = ssl.create_default_context()
+
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+        smtp.login(mail_user, mail_pass)
+        smtp.sendmail(mail_user, hospital_data[1], em.as_string())
+
+
+
+# TODO: Send the mail to 5 nearest hospital along with a toggle button
+'''
+Case Study -
+    PS - If we sent the mail only to one hospital and if tht hospital is busy at that time, so quick response will be provided to that incident
+    Sol - Send the mail to 5 nearest hospital instead of one, so even if one hospital is busy till other can provide quick response
+    PS - What if in worst possible case none of the hospital is busy, so every one will provide quick response this will result in wastage of Resources
+    Sol - In that email add a toggle button, so that if one hospital is on its way to provide resources to the incident then it will info our system and once this information is
+          received we'll send another mail to the remaining hospitals so tht their wont be any wastage of resources and also the incident will get timely response
+'''
+
 
 
 def potholes(cctv_id, result_queue):
@@ -240,6 +359,7 @@ def get_coordinates(request):
 
 
 
+
             # Generating Random 5 numbers from the route coordinates
             total_len = len(route_coordinate)
             logger.debug(f"Total route length: {total_len}")
@@ -251,6 +371,9 @@ def get_coordinates(request):
 
             random_numbers = [random.randint(0, total_len - 1) for _ in range(5)]
             logger.debug(f"Random indices: {random_numbers}")
+
+            # After detection of accident send an emergency mail to the nearest hospital
+            send_email(route_coordinate[random_numbers[4]][0], route_coordinate[random_numbers[4]][1])
 
             # Create a demo detected_list
             detected_list = {
