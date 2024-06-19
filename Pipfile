@@ -14,6 +14,7 @@ scikit-learn = "*"
 matplotlib = "*"
 opencv-python = "*"
 ultralytics = "*"
+unitest = "==1.4.25"
 
 [dev-packages]
 
