@@ -6,4 +6,4 @@ pandas~=2.0.3
 geopy~=2.4.1
 ultralytics~=8.0.226
 matplotlib
-django-allauth==0.48.0
+django-allauth
