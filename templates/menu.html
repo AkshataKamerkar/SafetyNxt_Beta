@@ -79,7 +79,7 @@
             <img class="icon" src="/static/img/traffic.png" />
             <!-- toggle button -->
             <label class="toggle_box">
-              <input type="checkbox" id="checkbox" />
+              <input type="checkbox" id="trafficCheckbox" onchange="updateMapMarkers()" checked />
               <div class="circle"></div>
             </label>
           </div>
@@ -90,7 +90,7 @@
             <div class="service-title">Accident Detection</div>
             <img class="icon" src="/static/img/accident.png" />
             <label class="toggle_box">
-              <input type="checkbox" id="checkbox" />
+              <input type="checkbox" id="accidentCheckbox" onchange="updateMapMarkers()" checked />
               <div class="circle"></div>
             </label>
           </div>
@@ -101,7 +101,7 @@
             <div class="service-title">Pothole Identification</div>
             <img class="icon" src="/static/img/pothole.png" />
             <label class="toggle_box">
-              <input type="checkbox" id="checkbox" />
+              <input type="checkbox" id="potholeCheckbox" onchange="updateMapMarkers()" checked />
               <div class="circle"></div>
             </label>
           </div>
@@ -137,6 +137,7 @@
     let toggleBoxes = document.querySelectorAll(".toggle_box");
     let trafficToggleBox = document.getElementById("trafficCheckbox");
     let potholeToggleBox = document.getElementById("potholeCheckbox");
+    let accidentToggleBox = document.getElementById("accidentCheckbox");
 
     let circles = document.querySelectorAll(".circle");
 
@@ -158,6 +159,33 @@
         }
       };
     });
+
+    function updateMapMarkers() {
+    var trafficChecked = document.getElementById('trafficCheckbox').checked;
+    var accidentChecked = document.getElementById('accidentCheckbox').checked;
+    var potholeChecked = document.getElementById('potholeCheckbox').checked;
+
+    // Add or remove traffic markers based on checkbox state
+    if (trafficChecked) {
+        trafficMarkers.forEach(marker => marker.addTo(map));
+    } else {
+        trafficMarkers.forEach(marker => map.removeLayer(marker));
+    }
+
+    // Add or remove accident markers based on checkbox state
+    if (accidentChecked) {
+        accidentMarkers.forEach(marker => marker.addTo(map));
+    } else {
+        accidentMarkers.forEach(marker => map.removeLayer(marker));
+    }
+
+    // Add or remove pothole markers based on checkbox state
+    if (potholeChecked) {
+        potholeMarkers.forEach(marker => marker.addTo(map));
+    } else {
+        potholeMarkers.forEach(marker => map.removeLayer(marker));
+    }
+    }
   </script>
 
 </body>

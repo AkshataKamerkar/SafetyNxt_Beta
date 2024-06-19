@@ -1,0 +1,38 @@
+name: Django CI
+
+on:
+  push
+  
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run migrations
+      run: |
+        python manage.py migrate
+
+    - name: Run tests
+      run: |
+        python manage.py test
+
+    - name: Archive test reports
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-reports
+        path: reports/
