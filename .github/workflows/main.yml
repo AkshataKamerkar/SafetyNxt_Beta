@@ -24,12 +24,6 @@ jobs:
         pwd
         ls
 
-    - name: Run the Application 
-      run: |
-        python manage.py makemigrations
-        python manage.py migrate
-        python manage.py runserver
-
     - name: Run tests
       run: |
         python manage.py test
