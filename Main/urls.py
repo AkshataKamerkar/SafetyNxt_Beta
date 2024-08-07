@@ -8,6 +8,6 @@ urlpatterns = [
     path('',LandingPage.as_view(),name='index'),
     path('about',AboutUs.as_view(),name='about'),
     path('menu',Map.as_view(),name='menu'),
-    path('coordinates/',views.get_coordinates,name='coordinates')
+    path('coordinates/',views.get_coordinates,name='coordinates'),
     path('health/',views.health,name-'health'),
 ]
