@@ -60,6 +60,14 @@ logger = logging.getLogger(__name__)
         - Dashboard ( new page ) containing the info of all the previous accidents [ Location, time ]   
 '''
 
+
+def health(request):
+    '''
+        - This function is used to automatically check, whether the application is running or not in CI-pipeline
+    '''
+    return JsonResponse({'status':'running'})
+    
+
 def get_location_from_lls(latitude, longitude):
 
     '''
