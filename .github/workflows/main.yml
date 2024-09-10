@@ -28,9 +28,4 @@ jobs:
       run: |
         python manage.py test
 
-    - name: Archive test reports
-      if: always()
-      uses: actions/upload-artifact@v2
-      with:
-        name: test-reports
-        path: reports/
+    
