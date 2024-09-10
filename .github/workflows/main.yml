@@ -1,7 +1,7 @@
 name: Django CI
 
 on:
-  push         # After every push 
+  workflow_dispatch:         #  Have to manually run the pipeline
   
 jobs:
   build:
