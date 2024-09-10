@@ -40,7 +40,6 @@
 4. Simultaneously, traffic and pothole monitoring begins, and users are informed of any issues through popups on the map 🚦
 
 
-##  🎥 Demo
 
 
 ## 🚀 Future Scope
